@@ -4,13 +4,29 @@
 
 @section('content')
 
+    @php
+        $usuario = [
+            'flexible' => [
+                'mensual' => 1000,
+                'semanal' => 250,
+                'diario' => 50,
+            ],
+            'grafica' => [
+                'ingresos' => 1000,
+                'gastos' => 250,
+                'flexible' => 750,
+            ],
+            'actual' => 1000,
+        ];
+    @endphp
+
     <div id="titulo">
         <h1>Panel principal</h1>
     </div>
     <div class="main-content">
         <div id="estado">
             <span>👋🏻 Hola, <span id="nombre">Nombre</span></span>
-            <span id="dinero-actual">0€</span>
+            <span id="dinero-actual"> {{ $usuario['actual'] }}€</span>
         </div>
         <div class="botones" class="right">
             <a id="ingresos" href="{{ route('ingresos') }}">+</a>
@@ -27,7 +43,7 @@
                     data: {
                         datasets: [{
                             label: 'Finanzas del mes',
-                            data: [100, 455, 15],
+                            data: [ {{ $usuario['grafica']['gastos'] }}, {{ $usuario['grafica']['ingresos'] }}, {{ $usuario['grafica']['flexible'] }} ],
                             backgroundColor: ['#ef909088', '#c0e93b6e', '#a0ca1685'],
                             borderColor: ['#EF9090', '#BFE93B', '#A0CA16'],
                             borderWidth: 1
@@ -42,9 +58,9 @@
         </div>
         <div id="dinero-flexible">
             <h1>Dinero flexible</h1>
-            <span id="dinero-flexible-mensual"><span class="titulo">Mensual: </span> 0€</span>
-            <span id="dinero-flexible-semanal"><span class="titulo">Semanal: </span> 0€</span>
-            <span id="dinero-flexible-diario"><span class="titulo">Diario: </span> 0€</span>
+            <span id="dinero-flexible-mensual"><span class="titulo">Mensual: </span> {{ $usuario['flexible']['mensual'] }}€</span>
+            <span id="dinero-flexible-semanal"><span class="titulo">Semanal: </span> {{ $usuario['flexible']['semanal'] }}€</span>
+            <span id="dinero-flexible-diario"><span class="titulo">Diario: </span> {{ $usuario['flexible']['diario'] }}€</span>
         </div>
     </div>
 
