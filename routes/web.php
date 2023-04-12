@@ -38,8 +38,8 @@ Route::prefix('/finanzas')->group(function () {
         return view('finanzas.gastos');
     })->name('gastos');
 
-    Route::get('/compragrande', function () {
-        return view('finanzas.compragrande');
+    Route::get('/comprasgrandes', function () {
+        return view('finanzas.comprasgrandes');
     })->name('compragrande');
 
     Route::get('/unidadfamiliar', function () {
