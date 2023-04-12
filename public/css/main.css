@@ -115,12 +115,6 @@ body::-webkit-scrollbar {
     box-shadow: 0 0 20px #6fc5ff50;
 }
 
-/* <div id="error">
-<h1>404</h1>
-<h2>La página que buscas no existe</h2>
-<p>Por favor, comprueba que la URL es correcta</p>
-</div> */
-
 #error {
     text-align: center;
     margin-top: 5rem;
