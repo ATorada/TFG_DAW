@@ -626,13 +626,20 @@ table select#tipo option {
         width: 100%;
     }
 
+    .salir a{
+        margin-bottom: 1rem;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     /* General */
     .main-content {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-left: 10%;
+        margin: 0 auto;
         grid-gap: 10px;
     }
 
