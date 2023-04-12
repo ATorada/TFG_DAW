@@ -3,14 +3,8 @@
 @section('title', 'Inicia sesión')
 
 @section('content')
-    <header>
-        <ul class="nav">
-            <li class="left"><a href="{{ route('index') }}">Logo</a></li>
-            <li class="right"><a href="{{ route('register') }}">Regístrate</a></li>
-            <li class="right"><a href="{{ route('login') }}">Iniciar sesión</a></li>
-        </ul>
-    </header>
-    <form class="form">
+
+    <form class="auth">
         <div class="header">Inicia sesión</div>
         <div class="inputs">
             <input placeholder="Email" class="input" type="text">
@@ -21,7 +15,7 @@
                 </label>
                 <label for="checkbox" class="checkbox-text">Recuérdame</label>
             </div>
-            <button class="login">Acceder</button>
+            <button class="button">Acceder</button>
             <p class="register">¿No tienes cuenta? <a href="{{ route('register') }}">¡Regístrate!</a></p>
         </div>
     </form>

@@ -3,22 +3,6 @@
 @section('title', 'Panel principal')
 
 @section('content')
-    <ul class="sidenav">
-        <li><a href="{{ route('main') }}">Inicio</a></li>
-        <li><a href="{{ route('ingresos') }}">Ingresos</a></li>
-        <li><a href="{{ route('gastos') }}">Gastos</a></li>
-        <li><a href="{{ route('compragrande') }}">Compra Grande</a></li>
-        <li><a href="{{ route('unidadfamiliar') }}">Unidad Familiar</a></li>
-        <li><a href="{{ route('historial') }}">Historial</a></li>
-        <li><a class="account" href="{{ route('account') }}">Cuenta<img src="img/account_placeholder.png" alt=""></a>
-        </li>
-    </ul>
-
-    <header>
-        <ul class="nav">
-            <li class="salir right"><a href="{{ route('index') }}">Salir</a></li>
-        </ul>
-    </header>
 
     <div id="titulo">
         <h1>Panel principal</h1>
@@ -29,8 +13,8 @@
             <span id="dinero-actual">0€</span>
         </div>
         <div class="botones" class="right">
-                <a href="{{ route('ingresos') }}">+</a>
-                <a class="gastos" href="{{ route('gastos') }}">-</a> </li>
+            <a id="ingresos" href="{{ route('ingresos') }}">+</a>
+            <a id="gastos" href="{{ route('gastos') }}">-</a> </li>
         </div>
         <div id="grafica">
             <h1>Finanzas del mes</h1>

@@ -3,13 +3,7 @@
 @section('title', 'Página principal')
 
 @section('content')
-    <header>
-        <ul class="nav">
-            <li class="left"><a href="{{ route('index') }}">Logo</a></li>
-            <li class="right"><a href="{{ route('register') }}">Regístrate</a></li>
-            <li class="right"><a href="{{ route('login') }}">Iniciar sesión</a></li>
-        </ul>
-    </header>
+
     <div class="content">
         <div id="portada">
             <h1><span class="marked">Controla tu dinero</span> de manera fácil, rápida y gratuita</h1>
@@ -18,7 +12,7 @@
             </button>
         </div>
         <div id="secciones">
-            <div id="seccionPrincipal">
+            <div id="seccion-principal">
                 <div id="lugar">
                     <img src="img/mismositio_placeholder.png" alt="">
                     <h2>El mismo lugar</h2>
@@ -40,14 +34,14 @@
                     <p>Gestiona una unidad familiar, ahorrar no es solo de uno.</p>
                 </div>
             </div>
-            <div id="seccionControla">
+            <div id="seccion-controla">
                 <img src="img/greenarrow2_placeholder.png" alt="">
                 <div>
                     <h2>Controla</h2>
                     <p>Controla todo el dinero que entra y sale de tus bolsillos.</p>
                 </div>
             </div>
-            <div id="seccionFacil">
+            <div id="seccion-facil">
                 <div>
                     <img src="img/heart2_placeholder.png" alt="">
                     <div>
@@ -56,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div id="seccionAccesible">
+            <div id="seccion-accesible">
                 <img src="img/world4_placeholder.png" alt="">
                 <div>
                     <h2>Accesible</h2>

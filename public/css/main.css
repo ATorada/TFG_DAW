@@ -1,0 +1,127 @@
+/* CSS principal */
+
+@font-face {
+    font-family: "Helvetica";
+    src: url("fonts/Helvetica.ttf");
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: rgb(241, 241, 241);
+    background: -moz-linear-gradient(
+        164deg,
+        rgba(241, 241, 241, 1) 0%,
+        rgba(70, 88, 146, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+        164deg,
+        rgba(241, 241, 241, 1) 0%,
+        rgba(70, 88, 146, 1) 100%
+    );
+    background: linear-gradient(
+        164deg,
+        rgba(241, 241, 241, 1) 0%,
+        rgba(70, 88, 146, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f1f1f1",endColorstr="#465892",GradientType=1);
+    margin: 0;
+    font-family: "Helvetica";
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    min-height: 100vh;
+    padding: 0;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.right {
+    float: right !important;
+}
+
+.left {
+    float: left !important;
+}
+
+.marked {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #a956aa;
+}
+
+/* ~~~~ Nav superior ~~~~ */
+
+.logoImg {
+    width: 70px;
+    height: 70px;
+}
+
+.logo {
+    margin-top: -0.3rem !important;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    width: 70px !important;
+    transition: all 1s !important;
+}
+
+.logo:hover {
+    transform: rotate(360deg) !important;
+    transition: all 1s !important;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    margin-bottom: -0.5rem;
+}
+
+.nav li {
+    float: left;
+    margin: 1rem;
+}
+
+.nav li a {
+    display: block;
+    padding: 12.5px 30px;
+    border: 0;
+    border-radius: 100px;
+    background-color: #546da6;
+    color: #ffffff;
+    font-weight: Bold;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.nav li a:hover:not(ul.nav li:first-child a) {
+    background-color: #aadfee;
+    box-shadow: 0 0 20px #6fc5ff50;
+}
+
+@media screen and (max-width: 600px) {
+    ul.nav li.right,
+    ul.nav li.left,
+    ul.nav li {
+        float: none;
+        margin: auto;
+        margin-top: 1rem;
+        width: 100%;
+    }
+}

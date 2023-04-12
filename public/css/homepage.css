@@ -1,0 +1,323 @@
+/* ~~~~ CSS de la Página de Inicio ~~~~ */
+
+/* Portada */
+
+#portada button {
+    border: none;
+    color: #fff;
+    background-image: linear-gradient(30deg, #a956aa, #c9b1ce);
+    border-radius: 20px;
+    background-size: 100% auto;
+    font-family: inherit;
+    font-size: 17px;
+    padding: 0.6em 1.5em;
+    margin-left: 10rem;
+    margin-top: 2rem;
+}
+
+#portada button:hover {
+    background-position: right center;
+    background-size: 200% auto;
+    -webkit-animation: onda 2s infinite;
+    animation: onda 1.5s infinite;
+    animation-timing-function: ease-in;
+    transform: scale(1.1);
+}
+
+#portada h1 {
+    font-size: 3rem;
+    text-align: left;
+    margin: 10rem;
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 35%;
+    line-height: 2;
+}
+
+#portada {
+    align-items: center;
+    width: 100%;
+    padding: 15rem 0;
+    background: rgb(241, 241, 241);
+    border-top: 1px solid #465892;
+    border-bottom: 1px solid #465892;
+}
+
+/* Secciones de la portada */
+
+#secciones {
+    background-color: #465892;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s ease-out;
+    flex-direction: column;
+}
+
+#seccion-principal,
+#seccion-facil {
+    width: 70%;
+    background: rgb(255, 255, 255);
+    border: 1px solid #aadfee8c;
+    transition: all 0.2s;
+    box-shadow: 12px 12px 2px 1px #aadfee8c;
+    padding: 1.8rem;
+    overflow: visible;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 10rem;
+    border-radius: 5px;
+}
+
+#seccion-principal:hover {
+    box-shadow: -12px 12px 2px -1px #aadfee8c;
+}
+
+#seccion-facil:hover {
+    box-shadow: -12px 12px 2px -1px #f1a1a2a4;
+}
+
+#seccion-principal div,
+#seccion-facil div,
+#seccion-controla div,
+#seccion-accesible div {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    padding: 1rem;
+    margin: auto;
+    border-radius: 5px;
+}
+
+#seccion-principal div h2,
+#seccion-controla div h2,
+#seccion-accesible div h2 {
+    margin: 0;
+    margin-bottom: 2rem;
+}
+
+#seccion-principal div img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1.5rem;
+}
+
+#seccion-controla {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10rem;
+    gap: 2rem;
+}
+
+#seccion-controla div {
+    height: 100%;
+    background: rgb(255, 255, 255);
+    border: 1px solid #c0e93b94;
+    transition: all 0.2s;
+    box-shadow: 12px 12px 2px 1px #c0e93b94;
+    padding: 1.8rem;
+    overflow: visible;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#seccion-controla div:hover {
+    box-shadow: -12px 12px 2px -1px #c0e93b94;
+}
+
+#seccion-controla div h2 {
+    font-size: 2rem;
+    margin-left: 2rem;
+}
+
+#seccion-controla div p {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    margin-left: 2rem;
+}
+
+#seccion-controla img {
+    width: 250px;
+    height: 290px;
+    margin: auto;
+    margin-top: -2rem;
+    animation: move 1.5s linear infinite;
+}
+
+#seccion-facil {
+    margin-top: 10rem;
+    border-color: #f1a1a2a4;
+    width: 60%;
+    box-shadow: 12px 12px 2px 1px #f1a1a2a4;
+}
+
+#seccion-facil div {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#seccion-facil div div {
+    width: 50%;
+    flex-direction: column;
+    margin-top: -1rem;
+}
+
+#seccion-facil div div h2 {
+    font-size: 2rem;
+}
+
+#seccion-facil div div p {
+    font-size: 1.3rem;
+}
+
+#seccion-facil div img {
+    margin: auto;
+    width: 250px;
+    height: 250px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+#seccion-accesible {
+    width: 60%;
+    padding: 1.8rem;
+    transition: 0.5s ease-out;
+    overflow: visible;
+    margin: 10rem auto 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#seccion-accesible div {
+    background: rgb(255, 255, 255);
+    border: 1px solid #fffd6ace;
+    transition: all 0.2s;
+    box-shadow: 12px 12px 2px 1px #fffd6ace;
+    text-align: left;
+}
+
+#seccion-accesible div h2 {
+    font-size: 2rem;
+    margin-left: 2rem;
+}
+
+#seccion-accesible div p {
+    font-size: 1.3rem;
+    margin-left: 2rem;
+}
+
+#seccion-accesible div:hover {
+    box-shadow: -12px 12px 2px -1px #fffd6ace;
+}
+
+#seccion-accesible img {
+    width: 250px;
+    height: 250px;
+    animation: spin 15s linear infinite;
+}
+
+@media screen and (max-width: 900px) {
+    #seccion-principal,
+    #seccion-accesible,
+    #seccion-facil,
+    #seccion-controla {
+        width: 90%;
+        flex-direction: column;
+        height: auto;
+        padding: 0;
+        margin-top: 5rem;
+    }
+
+    #seccion-accesible img {
+        margin: auto;
+        margin-bottom: 2rem;
+    }
+
+    #seccion-facil div img {
+        width: 150px;
+        height: 150px;
+    }
+
+    #portada {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 0;
+    }
+
+    #portada h1 {
+        font-size: 2rem;
+        text-align: center;
+
+        margin-bottom: 0;
+        width: 100%;
+        line-height: 2;
+    }
+
+    #portada button {
+        margin: auto;
+        margin-top: 2rem;
+    }
+}
+
+/* Animaciones */
+
+@keyframes onda {
+    0% {
+        box-shadow: 0 0 0 0 #d7cef3;
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+    100% {
+        transform: rotate(-5deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
