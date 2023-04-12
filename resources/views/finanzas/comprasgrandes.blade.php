@@ -16,69 +16,11 @@
             </button>
         </div>
 
-        <div class="compra-grande">
-            <img src="../img/compragrande_placeholder.png" alt="">
-            <p><span class="titulo">01/2021</span> </p>
-            <p><span class="titulo">Nombre</span></p>
-            <p><span class="titulo"></span></p>
-            <br>
-            <p><span class="titulo">Total: </span>1000€<span class="titulo"> - €/mes:</span> 100€</p>
-            <div class="botones">
-                <button class="borrar">Borrar</button>
-                <button class="modificar">Modificar</button>
-            </div>
-        </div>
 
-        <div class="compra-grande">
-            <img src="../img/compragrande_placeholder.png" alt="">
-            <p><span class="titulo">01/2021</span> </p>
-            <p><span class="titulo">Nombre</span></p>
-            <p><span class="titulo"></span></p>
-            <br>
-            <p><span class="titulo">Total: </span>1000€<span class="titulo"> - €/mes:</span> 100€</p>
-            <div class="botones">
-                <button class="borrar">Borrar</button>
-                <button class="modificar">Modificar</button>
-            </div>
-        </div>
+        @for ($i = 0; $i < 5; $i++)
+            @include('finanzas.partials.compragrande', ['compragrande' => ['id'=>'compragrande_placeholder', 'nombre'=>'nombre','fecha' => '01/01/2021', 'total' => '1000', 'precio_mes' => '100']])
+        @endfor
 
-        <div class="compra-grande">
-            <img src="../img/compragrande_placeholder.png" alt="">
-            <p><span class="titulo">01/2021</span> </p>
-            <p><span class="titulo">Nombre</span></p>
-            <p><span class="titulo"></span></p>
-            <br>
-            <p><span class="titulo">Total: </span>1000€<span class="titulo"> - €/mes:</span> 100€</p>
-            <div class="botones">
-                <button class="borrar">Borrar</button>
-                <button class="modificar">Modificar</button>
-            </div>
-        </div>
-
-        <div class="compra-grande">
-            <img src="../img/compragrande_placeholder.png" alt="">
-            <p><span class="titulo">01/2021</span> </p>
-            <p><span class="titulo">Nombre</span></p>
-            <p><span class="titulo"></span></p>
-            <br>
-            <p><span class="titulo">Total: </span>1000€<span class="titulo"> - €/mes:</span> 100€</p>
-            <div class="botones">
-                <button class="borrar">Borrar</button>
-                <button class="modificar">Modificar</button>
-            </div>
-        </div>
-
-        <div class="compra-grande">
-            <img src="../img/compragrande_placeholder.png" alt="">
-            <p><span class="titulo">01/2021</span> </p>
-            <p><span class="titulo">Nombre</span></p>
-            <br>
-            <p><span class="titulo">Total: </span>1000€<span class="titulo"> - €/mes:</span> 100€</p>
-            <div class="botones">
-                <button class="borrar">Borrar</button>
-                <button class="modificar">Modificar</button>
-            </div>
-        </div>
 
     </div>
 
