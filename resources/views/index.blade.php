@@ -7,9 +7,9 @@
     <div class="content">
         <div id="portada">
             <h1><span class="marked">Controla tu dinero</span> de manera fácil, rápida y gratuita</h1>
-            <button>
+            <a href="{{ route('register') }}">
                 Comenzar ahora
-            </button>
+            </a>
         </div>
         <div id="secciones">
             <div id="seccion-principal">
