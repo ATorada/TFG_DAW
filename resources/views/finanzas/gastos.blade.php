@@ -23,19 +23,20 @@
                         <th>Cantidad</th>
                         <th>Tipo</th>
                         <th>Recurrente</th>
+                        <th>Unidad Familiar</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
                         $gastos = [
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'alimentacion', 'recurrente' => true],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'vivienda', 'recurrente' => false],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'transporte', 'recurrente' => true],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'comunicaciones', 'recurrente' => true],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'ocio', 'recurrente' => true],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'salud', 'recurrente' => false],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'educacion', 'recurrente' => true],
-                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'otros', 'recurrente' => true],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'alimentacion', 'recurrente' => true, 'unidadfamiliar' => true],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'vivienda', 'recurrente' => false, 'unidadfamiliar' => false],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'transporte', 'recurrente' => true, 'unidadfamiliar' => true],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'comunicaciones', 'recurrente' => true, 'unidadfamiliar' => false],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'ocio', 'recurrente' => true, 'unidadfamiliar' => false],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'salud', 'recurrente' => false, 'unidadfamiliar' => true],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'educacion', 'recurrente' => true, 'unidadfamiliar' => false],
+                            ['fecha' => '01/01/2021', 'concepto' => 'Salario', 'cantidad' => '1000€', 'tipo' => 'otros', 'recurrente' => true, 'unidadfamiliar' => true],
                         ];
                     @endphp
 
@@ -57,6 +58,9 @@
                                 </select>
                             <td>
                                 <input class="checkbox" type="checkbox" {{ $gasto['recurrente'] ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                <input class="checkbox" type="checkbox" {{ $gasto['unidadfamiliar'] ? 'checked' : '' }}>
                             </td>
                         </tr>
                     @endforeach
