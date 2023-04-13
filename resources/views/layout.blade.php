@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
     {{-- Carga finanzas.css en páginas específicas --}}
-    @if (Request::is('finanzas*'))
+    @if (Request::is('finances*'))
         <link rel="stylesheet" href="{{ asset('css/finanzas.css') }}">
     @endif
 
@@ -27,7 +27,7 @@
 
 <body>
 
-    @if (Request::is('finanzas*'))
+    @if (Request::is('finances*'))
         @include('partials.sidenav')
     @else
         @include('partials.topnav')

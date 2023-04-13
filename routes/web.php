@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,33 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::prefix('/finanzas')->group(function () {
+Route::prefix('/finances')->group(function () {
+    Route::get('/', function () {
+        return view('finanzas.index');
+    })->name('finance.index');
+
+    Route::resource('purchases', Web\PurchaseController::class)->only(['index']);
+    Route::resource('household', Web\HouseholdController::class)->only(['index']);
+    Route::resource('user', Web\UserController::class)->only(['index']);
+
+    Route::get('/income', function () {
+        return view('finanzas.ingresos');
+    })->name('finance.income');
+
+    Route::get('/expenses', function () {
+        return view('finanzas.gastos');
+    })->name('finance.expenses');
+
+    Route::get('/history', function () {
+        return view('finanzas.historial');
+    })->name('finance.history');
+
+    Route::get('/account', function () {
+        return view('finanzas.account');
+    })->name('account');
+});
+
+/* Route::prefix('/finanzas')->group(function () {
     Route::get('/', function () {
         return view('finanzas.index');
     })->name('main');
@@ -49,9 +76,4 @@ Route::prefix('/finanzas')->group(function () {
     Route::get('/historial', function () {
         return view('finanzas.historial');
     })->name('historial');
-
-    Route::get('/account', function () {
-        return view('finanzas.account');
-    })->name('account');
-});
-
+}); */

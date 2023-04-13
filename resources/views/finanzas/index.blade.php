@@ -29,8 +29,8 @@
             <span id="dinero-actual"> {{ $usuario['actual'] }}€</span>
         </div>
         <div class="botones" class="right">
-            <a id="ingresos" href="{{ route('ingresos') }}">+</a>
-            <a id="gastos" href="{{ route('gastos') }}">-</a> </li>
+            <a id="ingresos" href="{{ route('finance.income') }}">+</a>
+            <a id="gastos" href="{{ route('finance.expenses') }}">-</a> </li>
         </div>
         <div id="grafica">
             <h1>Finanzas del mes</h1>
