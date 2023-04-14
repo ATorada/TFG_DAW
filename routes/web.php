@@ -18,13 +18,13 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/login', function () {
+Route::get('login', function () {
     return view('auth.login');
-})->name('login');
+})->name('loginForm');
 
-Route::get('/register', function () {
+Route::get('register', function () {
     return view('auth.register');
-})->name('register');
+})->name('registerForm');
 
 Route::prefix('/finances')->group(function () {
     Route::get('/', function () {

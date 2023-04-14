@@ -16,7 +16,7 @@
                 <label for="checkbox" class="checkbox-text">Recuérdame</label>
             </div>
             <button class="button">Acceder</button>
-            <p class="register">¿No tienes cuenta? <a href="{{ route('register') }}">¡Regístrate!</a></p>
+            <p class="register">¿No tienes cuenta? <a href="{{ route('registerForm') }}">¡Regístrate!</a></p>
         </div>
     </form>
 

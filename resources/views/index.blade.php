@@ -7,7 +7,7 @@
     <div class="content">
         <div id="portada">
             <h1><span class="marked">Controla tu dinero</span> de manera fácil, rápida y gratuita</h1>
-            <a href="{{ route('register') }}">
+            <a href="{{ route('registerForm') }}">
                 Comenzar ahora
             </a>
         </div>

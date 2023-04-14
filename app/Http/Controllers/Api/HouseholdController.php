@@ -4,62 +4,76 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Household;
 
 class HouseholdController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
+
+    //Crea una transaccion en la que crea un household y lo asocia al usuario
     {
-        //
+        $household = Household::create();
+
+        $request->user()->id_household = $household->id;
+        $request->user()->save();
+        $household->save();
+        $household = Household::find($household->id);
+        return response()->json($household, 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    //Método que devuelve el nombre de los usuarios de un household
+    public function getMembers()
     {
-        //
+        $id = auth()->user()->id_household;
+        $household = Household::find($id);
+        if ($household) {
+            $users = $household->users;
+            $members = [];
+            foreach ($users as $user) {
+                $members[] = $user->user;
+            }
+            return response()->json($members, 200);
+        } else {
+            return response()->json(['error' => 'You are not in a household'], 404);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    //Obtiene de cada usuario de la household todos los gastos e ingresos y los suma
+    public function getBalance()
     {
-        //
+        $id = auth()->user()->id_household;
+        $household = Household::find($id);
+        if ($household) {
+            $users = $household->users;
+            $incomesTotal = 0;
+            $expensesTotal = 0;
+            foreach ($users as $user) {
+                $incomes = $user->finances()->where('compute_household', true)->where('is_income', true)->get();
+                foreach ($incomes as $income) {
+                    $expensesTotal +=  $income->amount;
+                }
+                $expenses = $user->finances()->where('compute_household', true)->where('is_income', false)->get();
+                foreach ($expenses as $expense) {
+                    $incomesTotal += $expense->amount;
+                }
+            }
+            return response()->json(['income' => $incomesTotal, 'expenses' => $expensesTotal], 200);
+        } else {
+            return response()->json(['error' => 'Household not found'], 404);
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $household = Household::find($id);
+        if ($household) {
+            $household->delete();
+            return response()->json(['message' => 'Household deleted'], 200);
+        } else {
+            return response()->json(['error' => 'Household not found'], 404);
+        }
     }
 }
