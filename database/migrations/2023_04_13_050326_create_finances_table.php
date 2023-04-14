@@ -23,7 +23,6 @@ return new class extends Migration
             $table->boolean('constant')->default(false);
             $table->boolean('is_income')->default(false);
             $table->boolean('compute_household')->default(true);
-            $table->foreignId('id_household')->nullable()->constrained('households')->nullOnDelete();
             $table->unique(['id_user', 'name', 'period'], 'unique_user_name_period');
             $table->index(['id_user', 'period']);
             $table->timestamps();

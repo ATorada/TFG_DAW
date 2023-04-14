@@ -18,7 +18,7 @@ return new class extends Migration
                     IF NEW_name = 'ahorro' AND (NEW_category != 'ahorro' OR NEW_category IS NULL) THEN
                         -- Si es un gasto de tipo ahorro se comprueba que la categoría sea ahorro
                         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El gasto de tipo ahorro no permite una categoría diferente a ahorro.';
-                    ELSEIF NEW_category IS NULL AND NOT (NEW_name = 'ahorro' AND NEW_category = 'ahorro') THEN
+                        ELSEIF (NEW_category IS NULL OR NEW_category = 'ahorro') AND NOT (NEW_name = 'ahorro' AND NEW_category = 'ahorro') THEN
                         -- Si no es un gasto de tipo ahorro se comprueba que la categoría no sea nula y que sea una de las permitidas
                         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Los gastos no pueden tener una categoría nula, siendo las categorías permitidas otros, alimentación, vivienda, transporte, comunicaciones, ocio, salud y educación.';
                     END IF;
@@ -32,12 +32,14 @@ return new class extends Migration
         ");
 
         DB::unprepared("
-            CREATE PROCEDURE last_user_household(OLD_id_household INT)
+            CREATE PROCEDURE last_user_household(IN OLD_id_household INT)
             BEGIN
                 DECLARE count INT;
-                SELECT COUNT(*) INTO count FROM users NATURAL JOIN households WHERE id_household = OLD_id_household;
-                IF count = 0 THEN
-                    DELETE FROM households WHERE id_household = OLD_id_household;
+                IF OLD_id_household IS NOT NULL THEN
+                    SELECT COUNT(*) INTO count FROM users JOIN households ON households.id = users.id_household WHERE households.id = OLD_id_household;
+                    IF count = 0 THEN
+                        DELETE FROM households WHERE id = OLD_id_household;
+                    END IF;
                 END IF;
             END
         ");
@@ -56,12 +58,14 @@ return new class extends Migration
         ");
 
         DB::unprepared("
-            CREATE PROCEDURE household_max_users(IN household INT)
+            CREATE PROCEDURE household_max_users(IN OLD_id_household INT)
             BEGIN
                 DECLARE count INT;
-                SELECT COUNT(*) INTO count FROM users NATURAL JOIN households WHERE id_household = household;
-                IF count >= 5 THEN
-                    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La unidad familiar no puede tener más de 5 usuarios.';
+                IF OLD_id_household IS NOT NULL THEN
+                    SELECT COUNT(*) INTO count FROM users JOIN households ON households.id = users.id_household WHERE households.id = OLD_id_household;
+                    IF count >= 5 THEN
+                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La unidad familiar no puede tener más de 5 usuarios.';
+                    END IF;
                 END IF;
             END
         ");

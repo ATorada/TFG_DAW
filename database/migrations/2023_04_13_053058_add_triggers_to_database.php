@@ -10,6 +10,25 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        DB::unprepared('
+            CREATE TRIGGER uuid_household_insert
+            BEFORE INSERT ON households FOR EACH ROW
+            BEGIN
+                -- Generar un nuevo UUID aleatorio
+                SET NEW.UUID = UUID();
+            END
+        ');
+
+        DB::unprepared('
+            CREATE TRIGGER uuid_household__update
+            BEFORE UPDATE ON households FOR EACH ROW
+            BEGIN
+                -- Restaurar el valor original de UUID
+                SET NEW.UUID = OLD.UUID;
+            END
+        ');
+
         DB::unprepared('
             CREATE TRIGGER category_not_null_in_expenses_insert
             BEFORE INSERT ON finances
@@ -169,7 +188,9 @@ return new class extends Migration
             BEFORE UPDATE ON users
             FOR EACH ROW
             BEGIN
-                CALL household_max_users(NEW.id_household);
+                IF OLD.id_household != NEW.id_household THEN
+                    CALL household_max_users(NEW.id_household);
+                END IF;
             END
         ");
 
@@ -187,7 +208,9 @@ return new class extends Migration
             BEFORE UPDATE ON purchases
             FOR EACH ROW
             BEGIN
-                CALL user_max_purchases(NEW.id_user);
+                IF OLD.id_user != NEW.id_user THEN
+                    CALL user_max_purchases(NEW.id_user);
+                END IF;
             END
         ");
 
@@ -198,6 +221,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        DB::unprepared('DROP TRIGGER uuid_household_insert');
+        DB::unprepared('DROP TRIGGER uuid_household_update');
         DB::unprepared('DROP TRIGGER category_not_null_on_expenses_insert');
         DB::unprepared('DROP TRIGGER category_not_null_on_expenses_update');
         DB::unprepared('DROP TRIGGER last_user_household_update');

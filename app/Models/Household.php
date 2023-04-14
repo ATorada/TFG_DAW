@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Household extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'id_household';
+    protected $fillable = [
+        'uuid',
+    ];
 
     public function users()
     {

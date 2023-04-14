@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name', 50);
             $table->date('period')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->decimal('amount', 7, 2);
-            $table->foreignId('id_household')->nullable()->constrained('households')->nullOnDelete();
             $table->timestamps();
         });
     }

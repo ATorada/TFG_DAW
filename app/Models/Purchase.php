@@ -26,10 +26,5 @@ class Purchase extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function household()
-    {
-        return $this->belongsTo(Household::class, 'id_household');
-    }
-
 
 }

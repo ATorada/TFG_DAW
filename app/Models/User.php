@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -55,6 +56,6 @@ class User extends Authenticatable
 
     public function household()
     {
-        return $this->hasOne(Household::class, 'id_household');
+        return $this->belongsTo(Household::class, 'id_household');
     }
 }
