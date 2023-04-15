@@ -29,7 +29,6 @@ class FinanceController extends Controller
             'constant' => 'boolean',
             'is_income' => 'boolean',
             'compute_household' => 'boolean',
-            'id_household' => 'nullable|exists:households,id',
         ]);
 
         $validatedData['constant'] = $validatedData['constant'] ?? 0;
@@ -46,7 +45,6 @@ class FinanceController extends Controller
         $finance->constant = $validatedData['constant'];
         $finance->is_income = $validatedData['is_income'];
         $finance->compute_household = $validatedData['compute_household'];
-        $finance->id_household = $request->id_household;
 
         try {
             $finance->save();
@@ -143,5 +141,31 @@ class FinanceController extends Controller
         }
 
         return response()->json(null, 204);
+    }
+
+    public function getIncome(){
+        $user = auth()->user();
+        $result = [];
+        $finances = Finance::where('id_user', $user->id)->where('is_income', 1)->get();
+        $total = 0;
+        foreach ($finances as $finance) {
+            $total += $finance->amount;
+        }
+        $result['total'] = $total;
+        $result['finances'] = $finances;
+        return response()->json($result, 200);
+    }
+
+    public function getExpenses(){
+        $user = auth()->user();
+        $result = [];
+        $finances = Finance::where('id_user', $user->id)->where('is_income', 0)->get();
+        $total = 0;
+        foreach ($finances as $finance) {
+            $total += $finance->amount;
+        }
+        $result['total'] = $total;
+        $result['finances'] = $finances;
+        return response()->json($result, 200);
     }
 }

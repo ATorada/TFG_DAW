@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,31 +27,24 @@ Route::get('register', function () {
     return view('auth.register');
 })->name('registerForm');
 
-Route::prefix('/finances')->group(function () {
-    Route::get('/', function () {
-        return view('finanzas.index');
-    })->name('finance.index');
+Route::middleware('cookie')->prefix('/finances')->group(function () {
 
-    Route::resource('purchases', Web\PurchaseController::class)->only(['index']);
-    Route::resource('household', Web\HouseholdController::class)->only(['index']);
-    Route::resource('user', Web\UserController::class)->only(['index']);
+        Route::get('/',[Web\FinanceController::class, 'index'])->name('finance.index');
 
-    Route::get('/income', function () {
-        return view('finanzas.ingresos');
-    })->name('finance.income');
+        Route::resource('purchases', Web\PurchaseController::class)->only(['index']);
+        Route::resource('household', Web\HouseholdController::class)->only(['index']);
+        Route::resource('user', Web\UserController::class)->only(['index']);
 
-    Route::get('/expenses', function () {
-        return view('finanzas.gastos');
-    })->name('finance.expenses');
+        Route::get('/income',[Web\FinanceController::class, 'income'])->name('finance.income');
 
-    Route::get('/history', function () {
-        return view('finanzas.historial');
-    })->name('finance.history');
+        Route::get('/expenses', [Web\FinanceController::class, 'expenses'])->name('finance.expenses');
 
-    Route::get('/account', function () {
-        return view('finanzas.account');
-    })->name('account');
+        Route::get('/history', [Web\FinanceController::class, 'history'])->name('finance.history');
+
+        Route::get('/account', [Web\FinanceController::class, 'account'])->name('account');
 });
+
+
 
 /* Route::prefix('/finanzas')->group(function () {
     Route::get('/', function () {

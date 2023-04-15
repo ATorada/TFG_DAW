@@ -35,4 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ($request) {
     Route::get('households/members', [Api\HouseholdController::class, 'getMembers']);
     Route::get('households/balance', [Api\HouseholdController::class, 'getBalance']);
 
+    Route::get('income', [Api\FinanceController::class, 'getIncome']);
+    Route::get('expenses', [Api\FinanceController::class, 'getExpenses']);
+
 });

@@ -4,6 +4,28 @@
 
 @section('content')
 
+    <div class="modal">
+
+        <div class="modal-content">
+            <span class="close">x</span>
+            <form action="">
+                <h1>Añadir finanza</h1>
+                <input type="text" name="concept" id="concept" placeholder="Concepto">
+                <input type="number" name="amount" id="amount" placeholder="Cantidad">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="constant" id="constant">
+                    <label for="constant">Recurrente</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" name="household" id="household">
+                    <label for="household">Unidad Familiar</label>
+                </div>
+                <input type="hidden" name="is_income" id="is_income" value="1">
+                <button class="añadir" type="submit">Añadir</button>
+            </form>
+        </div>
+    </div>
+
     <div id="titulo">
         <h1>Ingresos</h1>
     </div>
@@ -14,7 +36,6 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Fecha</th>
                         <th>Concepto</th>
                         <th>Cantidad</th>
                         <th>Recurrente</th>
@@ -22,36 +43,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                    $ingresos = [
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => true, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => false, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => true, 'unidadfamiliar' => false],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => false, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => true, 'unidadfamiliar' => false],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => false, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => true, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => false, 'unidadfamiliar' => false],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => true, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => false, 'unidadfamiliar' => true],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => true, 'unidadfamiliar' => false],
-                        ['fecha' => '01/01/2021','concepto' => 'Salario','cantidad' => '1000€','recurrente' => false, 'unidadfamiliar' => true]
-                    ];
-                    @endphp
-
-                    @foreach ($ingresos as $ingreso)
+                    @if (count($data['income']['finances']) > 0)
+                        @foreach ($data['income']['finances'] as $income)
+                            <tr>
+                                <td>{{ $income['name'] }}</td>
+                                <td>{{ $income['amount'] }}</td>
+                                <td>
+                                    <input class="checkbox" type="checkbox" name="constant" id="constant" disabled
+                                        {{ $income['constant'] ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    <input class="checkbox" type="checkbox" name="compute_household" id="compute_household" disabled
+                                        {{ $income['compute_household'] ? 'checked' : '' }}>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td>{{ $ingreso['fecha'] }}</td>
-                            <td>{{ $ingreso['concepto'] }}</td>
-                            <td>{{ $ingreso['cantidad'] }}</td>
-                            <td>
-                                <input class="checkbox" type="checkbox" {{ $ingreso['recurrente'] ? 'checked' : '' }}>
-                            </td>
-                            <td>
-                                <input class="checkbox" type="checkbox" {{ $ingreso['unidadfamiliar'] ? 'checked' : '' }}>
-                            </td>
+                            <td colspan="5"><b>No hay ingresos</b></td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -62,4 +73,5 @@
             <b>Añadir</b>
         </button>
     </div>
+    <script src="../js/finances.js"></script>
 @endsection

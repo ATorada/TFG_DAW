@@ -49,6 +49,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
+
         if ($e instanceof ValidationException or $request->is('api/*')) {
             if ($e instanceof ValidationException) {
                 $errors = $e->errors();

@@ -20,6 +20,7 @@
 
     {{-- Carga auth.css en las páginas de login y register --}}
     @if (Request::is('login') || Request::is('register'))
+        <script src="{{ asset('js/auth.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     @endif
 

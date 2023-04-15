@@ -4,6 +4,37 @@
 
 @section('content')
 
+    <div class="modal">
+
+        <div class="modal-content">
+            <span class="close">x</span>
+            <form action="">
+                <h1>Añadir finanza</h1>
+                <input type="text" name="name" id="name" placeholder="Concepto">
+                <input type="number" name="amount" id="amount" placeholder="Cantidad">
+                <select name="category" id="category">
+                    <option value="alimentacion">Alimentación</option>
+                    <option value="hogar">Hogar</option>
+                    <option value="transporte">Transporte</option>
+                    <option value="ocio">Ocio</option>
+                    <option value="ropa">Ropa</option>
+                    <option value="salud">Salud</option>
+                    <option value="otros">Otros</option>
+                </select>
+                <div class="checkbox-container">
+                    <input type="checkbox" name="constant" id="constant">
+                    <label for="constant">Recurrente</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" name="compute_household" id="compute_household">
+                    <label for="compute_household">Unidad Familiar</label>
+                </div>
+                <input type="hidden" name="is_income" id="is_income" value="0">
+                <button class="añadir" type="submit">Añadir</button>
+            </form>
+        </div>
+    </div>
+
     <div id="titulo">
         <h1>Gastos</h1>
     </div>
@@ -47,13 +78,18 @@
                             <td>{{ $gasto['cantidad'] }}</td>
                             <td>
                                 <select name="tipo" id="tipo">
-                                    <option value="alimentacion" {{ $gasto['tipo'] == 'alimentacion' ? 'selected' : '' }}>Alimentación</option>
-                                    <option value="vivienda" {{ $gasto['tipo'] == 'vivienda' ? 'selected' : '' }}>Vivienda</option>
-                                    <option value="transporte" {{ $gasto['tipo'] == 'transporte' ? 'selected' : '' }}>Transporte</option>
-                                    <option value="comunicaciones" {{ $gasto['tipo'] == 'comunicaciones' ? 'selected' : '' }}>Comunicaciones</option>
+                                    <option value="alimentacion" {{ $gasto['tipo'] == 'alimentacion' ? 'selected' : '' }}>
+                                        Alimentación</option>
+                                    <option value="vivienda" {{ $gasto['tipo'] == 'vivienda' ? 'selected' : '' }}>Vivienda
+                                    </option>
+                                    <option value="transporte" {{ $gasto['tipo'] == 'transporte' ? 'selected' : '' }}>
+                                        Transporte</option>
+                                    <option value="comunicaciones"
+                                        {{ $gasto['tipo'] == 'comunicaciones' ? 'selected' : '' }}>Comunicaciones</option>
                                     <option value="ocio" {{ $gasto['tipo'] == 'ocio' ? 'selected' : '' }}>Ocio</option>
                                     <option value="salud" {{ $gasto['tipo'] == 'salud' ? 'selected' : '' }}>Salud</option>
-                                    <option value="educacion" {{ $gasto['tipo'] == 'educacion' ? 'selected' : '' }}>Educación</option>
+                                    <option value="educacion" {{ $gasto['tipo'] == 'educacion' ? 'selected' : '' }}>
+                                        Educación</option>
                                     <option value="otros" {{ $gasto['tipo'] == 'otros' ? 'selected' : '' }}>Otros</option>
                                 </select>
                             <td>
@@ -75,5 +111,7 @@
             <b>Añadir</b>
         </button>
     </div>
+
+    <script src="{{ asset('js/finances.js') }}"></script>
 
 @endsection

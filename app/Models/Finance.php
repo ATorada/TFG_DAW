@@ -18,7 +18,6 @@ class Finance extends Model
         'constant',
         'is_income',
         'compute_household',
-        'id_household',
         'unique_user_name_period',
     ];
 

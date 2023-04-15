@@ -138,10 +138,12 @@ body::-webkit-scrollbar {
 @media screen and (max-width: 600px) {
     ul.nav li.right,
     ul.nav li.left,
-    ul.nav li {
-        float: none;
+    ul.nav li,
+    ul.nav li:first-child a{
+        float: none !important;
         margin: auto;
         margin-top: 1rem;
         width: 100%;
     }
+
 }
