@@ -41,7 +41,7 @@ Route::middleware('cookie')->prefix('/finances')->group(function () {
 
         Route::get('/history', [Web\FinanceController::class, 'history'])->name('finance.history');
 
-        Route::get('/account', [Web\FinanceController::class, 'account'])->name('account');
+        Route::get('/account', [Web\UserController::class, 'account'])->name('account');
 });
 
 

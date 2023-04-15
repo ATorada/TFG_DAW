@@ -23,6 +23,10 @@ class UserController extends Controller
         //
     }
 
+    public function account(){
+        return view('finanzas.account');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
