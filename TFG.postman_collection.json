@@ -1,0 +1,997 @@
+{
+	"info": {
+		"_postman_id": "02e82d56-a120-434e-8590-e5a40b6ebb69",
+		"name": "TFG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Finances",
+			"item": [
+				{
+					"name": "List Finances",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/finances/1",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"finances",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Finance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/finances/1/",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"finances",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Finance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "22|NUWxkltWCk33frQvoYhh8DyP8fG8ykLd78k8hefz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ahorro",
+									"type": "default"
+								},
+								{
+									"key": "period",
+									"value": "2022-10-23",
+									"type": "default"
+								},
+								{
+									"key": "category",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "amount",
+									"value": "32",
+									"type": "default"
+								},
+								{
+									"key": "is_income",
+									"value": "",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/finances/",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"finances",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Finance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "22|NUWxkltWCk33frQvoYhh8DyP8fG8ykLd78k8hefz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "ahorro2",
+									"type": "default"
+								},
+								{
+									"key": "period",
+									"value": "2022-05-02",
+									"type": "default"
+								},
+								{
+									"key": "is_income",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "category",
+									"value": "ahorro",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/finances/8",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"finances",
+								"8"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "movida",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Finance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Prueba",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/finances/1",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"finances",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Income",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/finances/1/",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"finances",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|8kwfCHJQ9UB6qMxnsvusV49ElT0s1rMdDrEf16uM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user",
+									"value": "3",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/user/1",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/user/profile",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Household",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/user/household",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"user",
+								"household"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "22|NUWxkltWCk33frQvoYhh8DyP8fG8ykLd78k8hefz",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Households",
+			"item": [
+				{
+					"name": "Create Household",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/households",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"households"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Members",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|rwpUJhqtIUWBYLrDL0ASt5YyEIz5NZTapzyOjMTn",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/households/members",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"households",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Balance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|8kwfCHJQ9UB6qMxnsvusV49ElT0s1rMdDrEf16uM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/households/balance",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"households",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Household",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/households/1",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"households",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchases",
+			"item": [
+				{
+					"name": "Purchases",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.0.210:80/api/purchases/",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Compra",
+									"type": "default"
+								},
+								{
+									"key": "period",
+									"value": "2022-01-15",
+									"type": "default"
+								},
+								{
+									"key": "amount",
+									"value": "3",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/purchases/",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"purchases",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Purchase",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Compra",
+									"type": "default"
+								},
+								{
+									"key": "period",
+									"value": "2022-01-15",
+									"type": "default"
+								},
+								{
+									"key": "amount",
+									"value": "3",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/purchases/6",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"purchases",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Compraa",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/purchases/5",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"purchases",
+								"5"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Compraa",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.0.210:80/api/purchases/5",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"210"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"purchases",
+								"5"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user",
+							"value": "Prueba",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "Prueba@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "Prueba",
+							"type": "default"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "Prueba",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.0.210:80/api/register",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"210"
+					],
+					"port": "80",
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "Prueba2",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "Prueba2@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Prueba",
+							"disabled": true
+						},
+						{
+							"key": "password_confirmation",
+							"value": "Prueba",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "Prueba@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "Prueba",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.0.210:80/api/login",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"210"
+					],
+					"port": "80",
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "Prueba2@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Prueba",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.0.210:80/api/logout",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"0",
+						"210"
+					],
+					"port": "80",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
