@@ -23,9 +23,8 @@ class FinanceController extends Controller
     public function store(Request $request){
         $validatedData = $request->validate([
             'name' => 'required|string|max:50',
-            'period' => 'required|date',
-            'category' => 'nullable|string|in:otros,alimentacion,vivienda,transporte,comunicaciones,ocio,salud,educación,ahorro',
-            'amount' => 'required|numeric',
+            'category' => 'nullable|string|in:otros,alimentacion,vivienda,transporte,comunicaciones,ocio,salud,educacion,ahorro',
+            'amount' => 'required|numeric|min:0',
             'constant' => 'boolean',
             'is_income' => 'boolean',
             'compute_household' => 'boolean',
@@ -33,13 +32,13 @@ class FinanceController extends Controller
 
         $validatedData['constant'] = $validatedData['constant'] ?? 0;
         $validatedData['is_income'] = $validatedData['is_income'] ?? 0;
-        $validatedData['compute_household'] = $validatedData['compute_household'] ?? 1;
+        $validatedData['compute_household'] = $validatedData['compute_household'] ?? 0;
 
         $user = auth()->user();
         $finance = new Finance();
         $finance->id_user = $user->id;
         $finance->name = $request->name;
-        $finance->period = $request->period;
+        $finance->period = date('Y-m-d');
         $finance->category = $request->category;
         $finance->amount = $request->amount;
         $finance->constant = $validatedData['constant'];
@@ -86,7 +85,7 @@ class FinanceController extends Controller
         $validatedData = $request->validate([
             'name' => 'sometimes|string|max:50',
             'period' => 'sometimes|date',
-            'category' => 'nullable|string|in:otros,alimentacion,vivienda,transporte,comunicaciones,ocio,salud,educación,ahorro',
+            'category' => 'nullable|string|in:otros,alimentacion,vivienda,transporte,comunicaciones,ocio,salud,educacion,ahorro',
             'amount' => 'sometimes|numeric',
             'constant' => 'sometimes|boolean',
             'is_income' => 'sometimes|boolean',
@@ -152,7 +151,7 @@ class FinanceController extends Controller
             $total += $finance->amount;
         }
         $result['total'] = $total;
-        $result['finances'] = $finances;
+        $result['income'] = $finances;
         return response()->json($result, 200);
     }
 
@@ -165,7 +164,7 @@ class FinanceController extends Controller
             $total += $finance->amount;
         }
         $result['total'] = $total;
-        $result['finances'] = $finances;
+        $result['expenses'] = $finances;
         return response()->json($result, 200);
     }
 }

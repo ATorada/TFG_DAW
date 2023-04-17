@@ -1,12 +1,20 @@
-<div class="compra-grande">
-    <img src="../img/comprasgrandes/{{ $compragrande['id'] }}.png" alt="">
-    <p><span class="titulo">{{ $compragrande['fecha'] }}</span></p>
-    <p><span class="titulo">{{ $compragrande['nombre'] }}</span></p>
+<div class="compra-grande" id="{{ $compragrande['id'] }}">
+
+    @php
+        $imagePath = 'storage/purchases/purchase_' . $compragrande['id'] . '.png';
+        $imageExists = file_exists(public_path($imagePath));
+    @endphp
+
+    <img src="{{ $imageExists ? asset($imagePath) : '../img/comprasgrandes/compragrande_placeholder.png' }}"
+        alt="">
+    <p><span class="titulo">{{ $compragrande['period'] }}</span></p>
+    <p><span class="titulo">{{ $compragrande['name'] }}</span></p>
     <br>
-    <p><span class="titulo">Total: </span> {{ $compragrande['total'] }}€<span class="titulo"> - €/mes:</span> {{ $compragrande['precio_mes'] }}€</p>
+    <p><span class="titulo">Total: </span> {{ $compragrande['amount'] }}€<span class="titulo"> - €/mes:</span>
+        {{ $compragrande['cost'] }}€</p>
     <div class="botones">
         <button class="borrar">Borrar</button>
-        <button class="modificar">Modificar</button>
+        {{-- <button class="modificar">Modificar</button> --}}
     </div>
 
 </div>

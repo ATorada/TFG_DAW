@@ -7,9 +7,9 @@
     <form class="auth">
         <div class="header">Inicia sesión</div>
         <div class="inputs">
-            <p id="error">Usuario o contraseña incorrectos</p>
+            <p class="error">Usuario o contraseña incorrectos</p>
             <input placeholder="Email" class="input" type="text" id="email">
-            <input placeholder="Contraseña" class="input" type="password" id="password">
+            <input placeholder="Contraseña" class="input" type="password" id="password" autocomplete="off">
             <div class="checkbox-container">
                 <label class="checkbox">
                     <input type="checkbox" id="checkbox">

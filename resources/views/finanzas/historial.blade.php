@@ -8,7 +8,7 @@
         <h1>Historial</h1>
     </div>
     <div class="main-content">
-        <input placeholder="Buscar" class="buscar" type="text">
+        <input placeholder="Buscar" class="buscar" type="text" id="buscar">
         <div id="tabla-finanzas">
             <table>
                 <thead>
@@ -20,36 +20,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Salario</td>
-                        <td>01/2021</td>
-                        <td>Ingreso</td>
-                        <td class="green">1000€</td>
-                    </tr>
-                    <tr>
-                        <td>Salario</td>
-                        <td>01/2021</td>
-                        <td>Ingreso</td>
-                        <td class="green">1000€</td>
-                    </tr>
-                    <tr>
-                        <td>Salario</td>
-                        <td>01/2021</td>
-                        <td>Gasto</td>
-                        <td class="red">1000€</td>
-                    </tr>
-                    <tr>
-                        <td>Salario</td>
-                        <td>01/2021</td>
-                        <td>Ingreso</td>
-                        <td class="green">1000€</td>
-                    </tr>
-                    <tr>
-                        <td>Salario</td>
-                        <td>01/2021</td>
-                        <td>Gasto</td>
-                        <td class="red">1000€</td>
-                    </tr>
+                    @foreach ($data as $finanza)
+                        <tr>
+                            <td>{{ $finanza['name'] }}</td>
+                            <td>{{ $finanza['period'] }}</td>
+                            <td>{{ $finanza['is_income'] ? 'Ingreso' : 'Gasto' }}</td>
+                            <td class="{{ $finanza['is_income'] ? 'green' : 'red' }}">{{ $finanza['amount'] }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -3,45 +3,50 @@
 @section('title', 'Unidad Familiar')
 
 @section('content')
-
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <h1>Unirse a una unidad familiar</h1>
+                    <p class="error">El código ingresado no es válido</p>
+                    <label for="codigo">Código de la unidad familiar</label>
+                    <input type="text" name="codigo" id="codigo">
+                    <button type="submit" class="añadir" id="unirse">Unirse</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="titulo">
         <h1>Unidad Familiar</h1>
     </div>
     <div class="main-content">
-
-        @php
-            $unidadfamiliar = [
-                'codigo' => '123456',
-                'integrantes' => ['integrante1', 'integrante2', 'integrante3', 'integrante4', 'integrante5'],
-                'ingresos' => '1000',
-                'gastos' => '500',
-            ];
-        @endphp
         <div id="unidad-familiar">
-
-            @if (!isset($unidadfamiliar))
+            <div style="{{ isset($data['error']) ? '' : 'display: none' }}" id="no-unidad">
                 <h2>¡No perteneces a una unidad familiar!</h2>
                 <div class="botones">
-                    <button class="modificar">Unirse</button>
-                    <button class="añadir">Crear</button>
+                    <button class="modificar" id="unirseModal">Unirse</button>
+                    <button class="añadir" id="crear">Crear</button>
                 </div>
-            @else
-                <h2>Código: {{ $unidadfamiliar['codigo'] }}</h2>
-                <div></div>
+            </div>
+            <div style="{{ isset($data['error']) ? 'display: none' : '' }}" id="unidad">
+                <h2>Código <p id="uuid">{{ $data['uuid'] ?? ''  }}</p> </h2>
                 <br>
                 <div id="integrantes">
-                    @foreach ($unidadfamiliar['integrantes'] as $integrante)
-                        <span><img src="../img/account_placeholder.png" alt=""></span>
-                    @endforeach
+                        @foreach ($data['members'] ?? [] as $user)
+                            <span><img src="../img/account_placeholder.png" alt="user"></span>
+                        @endforeach
                 </div>
                 <br>
-                <p><span class="titulo">Ingresos: </span>1000€</p>
-                <p><span class="titulo">Gastos: </span>500€</p>
+                <p><span class="titulo">Ingresos: </span> <span id="income"> {{ $data['income'] ?? '' }} </span></p>
+                <p><span class="titulo">Gastos: </span> <span id="expenses"> {{ $data['expenses'] ?? '' }} </span></p>
                 <div class="botones">
                     <button class="borrar">Salir</button>
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 
-    @endsection
+@endsection

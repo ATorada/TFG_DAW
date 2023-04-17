@@ -7,9 +7,16 @@
     <div class="content">
         <div id="portada">
             <h1><span class="marked">Controla tu dinero</span> de manera fácil, rápida y gratuita</h1>
+
+            @if (session('token'))
+            <a href="{{ route('finance.index') }}">
+                Ir a tu panel
+            </a>
+            @else
             <a href="{{ route('registerForm') }}">
                 Comenzar ahora
             </a>
+            @endif
         </div>
         <div id="secciones">
             <div id="seccion-principal">

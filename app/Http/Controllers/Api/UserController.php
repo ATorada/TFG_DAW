@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        if ($request->user()->id != $id) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $id = $request->user()->id;
+
 
         $validatedData = $request->validate([
-            'user' => 'sometimes|max:15|unique:users',
+            'user' => 'sometimes|max:15|unique:users|min:3',
             'email' => 'sometimes|email|unique:users',
             'password' => 'sometimes|confirmed',
-            'id_household' => 'sometimes|exists:households,id'
+            'id_household' => 'sometimes|exists:households,id',
+            'image' => 'sometimes|image|mimes:png',
         ]);
 
         if (count($validatedData) <= 0) {
@@ -39,6 +39,18 @@ class UserController extends Controller
                 $user->save();
             }
 
+            if($request->password){
+                $user->password = $validatedData['password'];
+                $user->save();
+            }
+
+            if($request->image){
+                if (file_exists(storage_path('app/public/users/' . $user->id . '.png'))) {
+                    unlink(storage_path('app/public/users/' . $user->id . '.png'));
+                }
+                $request->image->storeAs('public/users/', $user->id . '.png');
+            }
+
             $user->update($validatedData);
             return response()->json($user, 200);
         } else {
@@ -54,6 +66,22 @@ class UserController extends Controller
             if ($user->id_household) {
                 $uuid = $user->household->uuid;
                 return response()->json(['uuid' => $uuid, 'id' => $user->id_household], 200);
+            } else {
+                return response()->json(['error' => 'User not in a household'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
+    public function leaveHousehold(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        if ($user) {
+            if ($user->id_household) {
+                $user->id_household = null;
+                $user->save();
+                return response()->json(['message' => 'User left household'], 200);
             } else {
                 return response()->json(['error' => 'User not in a household'], 404);
             }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -24,7 +25,18 @@ class UserController extends Controller
     }
 
     public function account(){
-        return view('finanzas.account');
+        $token = request()->session()->get('token');
+
+        $originalRequest = request()->instance();
+
+        $request = Request::create('/api/user/profile', 'GET');
+        $request->headers->set('Authorization', 'Bearer ' . $token);
+        $response = app()->handle($request);
+        $userData = json_decode($response->getContent(), true)['userData'];
+
+        app()->instance('request', $originalRequest);
+
+        return view('finanzas.account', ['data' => $userData]);
     }
 
     /**
@@ -64,6 +76,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+    }
+
+    public function logout(){
+        Cookie::queue(Cookie::forget('cookie_token'));
+        session()->flush();
+        return redirect()->route('loginForm');
     }
 }

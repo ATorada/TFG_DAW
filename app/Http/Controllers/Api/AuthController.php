@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -80,8 +81,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $cookie = cookie('cookie_token', null, -1);
-        $request->user()->currentAccessToken()->delete();
 
+        $request->user()->currentAccessToken()->delete();
+        Cookie::forget('cookie_token');
         return response()->json([
             "message" => "Logged out"
         ], Response::HTTP_OK)->withCookie($cookie);

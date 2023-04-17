@@ -18,12 +18,12 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name', 50);
             $table->date('period')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->enum('category', ['otros', 'alimentacion', 'vivienda', 'transporte', 'comunicaciones', 'ocio', 'salud', 'educación', 'ahorro'])->nullable();
+            $table->enum('category', ['otros', 'alimentacion', 'vivienda', 'transporte', 'comunicaciones', 'ocio', 'salud', 'educacion', 'ahorro'])->nullable();
             $table->decimal('amount', 7, 2);
             $table->boolean('constant')->default(false);
             $table->boolean('is_income')->default(false);
-            $table->boolean('compute_household')->default(true);
-            $table->unique(['id_user', 'name', 'period'], 'unique_user_name_period');
+            $table->boolean('compute_household')->default(false);
+            $table->unique(['id_user', 'name', 'period', 'category'], 'unique_finance');
             $table->index(['id_user', 'period']);
             $table->timestamps();
         });

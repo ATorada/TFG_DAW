@@ -25,13 +25,17 @@ window.onload = function () {
                 }).then(function (response) {
                     //Si la respuesta es correcta
                     if (response.status == 200) {
-                        window.location.href = url + "/finances";
+                        return response.json();
                     } else {
                         document.getElementById('email').classList.add('errorInput');
                         document.getElementById('password').classList.add('errorInput');
-                        document.getElementById('error').style.display = "block";
+                        document.getElementsByClassName('error')[0].style.display = "block";
                     }
                 }).then(function (data) {
+                    //Obtiene el token y lo guarda en el localStorage
+                    var token = data.token;
+                    localStorage.setItem('token', token);
+                    window.location.href = url + "/finances";
                 }).catch(function (error) {
                 });
         });

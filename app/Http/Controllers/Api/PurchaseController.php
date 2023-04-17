@@ -25,9 +25,10 @@ class PurchaseController extends Controller
     {
 
         $request->validate([
+            'image' => 'sometimes|image|mimes:png',
             'name' => 'required|string|max:50',
-            'period' => 'required|date',
-            'amount' => 'required|numeric',
+            'period' => 'required|date|after_or_equal:' . date('Y-m-d', strtotime('+1 month', strtotime(date('Y-m-01')))),
+            'amount' => 'required|numeric|min:0',
         ]);
 
         $user = auth()->user();
@@ -41,6 +42,10 @@ class PurchaseController extends Controller
             $purchase->save();
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['error' => 'The maximum number of purchases has been reached. (5)'], 400);
+        }
+
+        if ($request->hasFile('image')) {
+            $request->file('image')->storeAs('public/purchases/purchase_'. $purchase->id.'.png');
         }
 
         return response()->json($purchase, 201);
@@ -66,8 +71,8 @@ class PurchaseController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'sometimes|string|max:50',
-            'period' => 'sometimes|date',
-            'amount' => 'sometimes|numeric',
+            'period' => 'sometimes|date|after_or_equal:' . date('Y-m-d', strtotime('+1 month', strtotime(date('Y-m-01')))),
+            'amount' => 'sometimes|numeric|min:0',
         ]);
 
         $purchase = Purchase::where('id_user', auth()->user()->id)->where('id', $id)->first();
@@ -91,9 +96,13 @@ class PurchaseController extends Controller
     {
         //Elimina una purchase
         $purchase = Purchase::where('id_user', auth()->user()->id)->where('id', $id)->first();
+        //Si existe su imagen la elimina
+        if (file_exists(storage_path('app/public/purchases/purchase_' . $id . '.png'))) {
+            unlink(storage_path('app/public/purchases/purchase_' . $id . '.png'));
+        }
         if ($purchase) {
             $purchase->delete();
-            return response()->json(['message' => 'Purchase deleted.'], 200);
+            return response()->json(['message' => 'Purchase deleted.'], 204);
         } else {
             return response()->json(['error' => 'Purchase not found.'], 404);
         }

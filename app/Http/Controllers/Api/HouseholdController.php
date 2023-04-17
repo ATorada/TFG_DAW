@@ -76,4 +76,16 @@ class HouseholdController extends Controller
             return response()->json(['error' => 'Household not found'], 404);
         }
     }
+
+    public function joinHousehold(Request $request, string $uuid)
+    {
+        $household = Household::where('uuid', $uuid)->first();
+        if ($household) {
+            $request->user()->id_household = $household->id;
+            $request->user()->save();
+            return response()->json(['message' => 'Joined household'], 200);
+        } else {
+            return response()->json(['error' => 'Household not found'], 404);
+        }
+    }
 }

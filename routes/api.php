@@ -28,12 +28,15 @@ Route::group(['middleware' => ['auth:sanctum']], function ($request) {
     Route::apiResource('finances', Api\FinanceController::class);
     Route::apiResource('purchases', Api\PurchaseController::class);
     Route::apiResource('households', Api\HouseholdController::class)->only(['store','destroy']);
-    Route::apiResource('user', Api\UserController::class)->only(['update']);
+
+    Route::put('user', [Api\UserController::class, 'update']);
     //Añade una ruta get para getHousehold
     Route::get('user/household', [Api\UserController::class, 'getHousehold']);
-
+    Route::delete('user/leavehousehold', [Api\UserController::class, 'leaveHousehold']);
     Route::get('households/members', [Api\HouseholdController::class, 'getMembers']);
     Route::get('households/balance', [Api\HouseholdController::class, 'getBalance']);
+    //households/join/{id}
+    Route::post('households/join/{uuid}', [Api\HouseholdController::class, 'joinHousehold']);
 
     Route::get('income', [Api\FinanceController::class, 'getIncome']);
     Route::get('expenses', [Api\FinanceController::class, 'getExpenses']);

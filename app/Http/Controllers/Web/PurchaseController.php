@@ -12,7 +12,27 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        return view('finanzas.comprasgrandes');
+        $token = request()->session()->get('token');
+
+        $originalRequest = request()->instance();
+
+        $request = Request::create('/api/purchases', 'GET');
+        $request->headers->set('Authorization', 'Bearer ' . $token);
+        $response = app()->handle($request);
+
+        $data = json_decode($response->getContent(), true);
+
+        //Por cada compra calcula cuanto dinero costará llegar a la meta (amount/meses)
+        foreach ($data as $key => $value) {
+                $data[$key]['period'] = date('Y-m-d', strtotime($value['period']));
+                $diff = date_diff(date_create($data[$key]['period']), date_create(date('Y-m-01')));
+                $months = $diff->format('%m');
+                $data[$key]['cost'] = $value['amount'] / $months;
+        }
+
+        app()->instance('request', $originalRequest);
+
+        return view('finanzas.comprasgrandes', ['data' => $data]);
     }
 
     /**

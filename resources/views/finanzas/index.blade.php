@@ -73,9 +73,9 @@
             @php
                 $dias = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
             @endphp
-            <span id="dinero-flexible-mensual"><span class="titulo">Mensual: </span> {{ round($data['flexible'], 2) }}€</span>
-            <span id="dinero-flexible-semanal"><span class="titulo">Semanal: </span> {{ round($data['flexible']/4, 2) }}€</span>
-            <span id="dinero-flexible-diario"><span class="titulo">Diario: </span> {{ round($data['flexible'] / $dias) }}€</span>
+            <span id="dinero-flexible-mensual"><span class="titulo">Mensual: </span> <span class="{{ $data['flexible'] >= 0 ? '' : 'red' }}"> {{ round($data['flexible'], 2) }}€</span></span>
+            <span id="dinero-flexible-semanal"><span class="titulo">Semanal: </span> <span class="{{ $data['flexible'] >= 0 ? '' : 'red' }}">{{ round($data['flexible']/4, 2) }}€</span></span>
+            <span id="dinero-flexible-diario"><span class="titulo">Diario: </span> <span class="{{ $data['flexible'] >= 0 ? '' : 'red' }}">{{ round($data['flexible'] / $dias) }}€</span></span>
         </div>
     </div>
 

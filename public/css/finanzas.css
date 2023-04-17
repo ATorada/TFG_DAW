@@ -456,6 +456,8 @@ table select#tipo option {
 #tabla-finanzas {
     grid-row: 2 / 3;
     grid-column: 1 / -1;
+    overflow-y: auto;
+    max-height: 500px !important;
 }
 
 /* Gastos */
@@ -465,6 +467,44 @@ table select#tipo option {
     margin: 0 auto;
     width: 45% !important;
     text-align: center;
+}
+
+#ahorro output {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: #33406b;
+}
+
+#ahorro #botones {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row !important;
+    border: none;
+}
+
+#ahorro button {
+    width: 50%;
+    height: 100%;
+    color: white;
+    font-size: 20px;
+    border-radius: 0 0 10px 10px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#dineroDisponible,
+#ahorroActual {
+    color: #33406b;
 }
 
 /* Compra grande y unidad familiar */
@@ -546,12 +586,12 @@ table select#tipo option {
     transition: 0.2s;
 }
 
-#integrantes span:hover {
+/* #integrantes span:hover {
     background-color: #811212;
     opacity: 0.9;
     transition: 0.2s;
     border-radius: 0.5em;
-}
+} */
 
 .compra-grande .botones,
 #unidad-familiar .botones {
@@ -615,7 +655,7 @@ table select#tipo option {
 
 /* Media Queries */
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
     /* Nav Lateral */
     ul.sidenav {
         width: 100%;
@@ -676,6 +716,7 @@ table select#tipo option {
     /* Tablas */
     table {
         width: 100%;
+        height: 500px !important;
     }
 
     table th {
@@ -758,6 +799,12 @@ table select#tipo option {
         margin: auto !important;
         margin-top: 25% !important;
         padding: 0 !important;
+    }
+
+    .toast {
+        width: 100%;
+        left: 0 !important;
+        margin: 0 !important;
     }
 }
 
@@ -882,10 +929,10 @@ table select#tipo option {
 
 .modal form select {
     margin-bottom: 1.25em;
+    color: #33406b;
     height: 20px;
     border-radius: 5px;
     border: 1px solid gray;
-    padding: 0.8em;
     font-family: "Inter", sans-serif;
     outline: none;
 }
@@ -893,4 +940,84 @@ table select#tipo option {
 .modal form select:focus {
     border: 1px solid #33406b;
     outline: none;
+}
+
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 55%;
+    bottom: 50%;
+    font-size: 17px;
+}
+
+.toast.show {
+    visibility: visible;
+    -webkit-animation: toast_in 0.5s, toast_out 0.5s 2.5s;
+    animation: toast_in 0.5s, toast_out 0.5s 2.5s;
+}
+
+@keyframes toast_in {
+    from {
+        bottom: 30%;
+        opacity: 0;
+    }
+    to {
+        bottom: 50%;
+        opacity: 1;
+    }
+}
+
+@keyframes toast_out {
+    from {
+        bottom: 50%;
+        opacity: 1;
+    }
+    to {
+        bottom: 30%;
+        opacity: 0;
+    }
+}
+
+.nuevo {
+    animation: parpadeo 1s infinite;
+}
+
+@keyframes parpadeo {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #b3ffb3;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.disabled,
+.disabled:hover,
+.disabled:focus,
+.disabled:active,
+.disabled::before {
+    content: none !important;
+    background: none !important;
+    background-color: #b9b9b9 !important;
+    color: #33406b !important;
+    border: 1px solid #33406b !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+    border-radius: 0px 0px 10px 10px !important;
+}
+
+.table-selected {
+    background-color: #b3b3d1 !important;
 }

@@ -42,6 +42,8 @@ Route::middleware('cookie')->prefix('/finances')->group(function () {
         Route::get('/history', [Web\FinanceController::class, 'history'])->name('finance.history');
 
         Route::get('/account', [Web\UserController::class, 'account'])->name('account');
+
+        Route::get('/logout', [Web\UserController::class, 'logout'])->name('logout');
 });
 
 

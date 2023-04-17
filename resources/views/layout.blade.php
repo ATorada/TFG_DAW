@@ -10,6 +10,7 @@
 
     {{-- Carga finanzas.css en páginas específicas --}}
     @if (Request::is('finances*'))
+        <script src="{{ asset('js/finances/main.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('css/finanzas.css') }}">
     @endif
 
@@ -37,6 +38,38 @@
     @yield('content')
 
     {{-- @include('partials.footer') --}}
+    @if (Request::is('finances*'))
+
+        {{-- Si es gastos carga su script --}}
+        @if (Request::is('finances/expenses*'))
+        <script src="{{ asset('js/finances/gastos.js') }}"></script>
+        @endif
+
+        {{-- Si es ingresos carga su script --}}
+        @if (Request::is('finances/income*'))
+        <script src="{{ asset('js/finances/ingresos.js') }}"></script>
+        @endif
+
+        {{-- Si es purchases carga su script --}}
+        @if (Request::is('finances/purchases*'))
+        <script src="{{ asset('js/finances/purchases.js') }}"></script>
+        @endif
+
+        {{-- Si es historz carga su script --}}
+        @if (Request::is('finances/history*'))
+        <script src="{{ asset('js/finances/history.js') }}"></script>
+        @endif
+
+        {{-- Si es household carga su script --}}
+        @if (Request::is('finances/household*'))
+        <script src="{{ asset('js/finances/household.js') }}"></script>
+        @endif
+
+        {{-- Si es account carga su script --}}
+        @if (Request::is('finances/account*'))
+        <script src="{{ asset('js/finances/account.js') }}"></script>
+        @endif
+    @endif
 </body>
 
 </html>
