@@ -35,10 +35,18 @@
     line-height: 2;
 }
 
+#portada img {
+    width: 30rem;
+    height: 30rem;
+    margin-left: 60%;
+    margin-top: -25rem;
+}
+
 #portada {
     align-items: center;
     width: 100%;
     padding: 15rem 0;
+    padding-bottom: 10rem;
     background: rgb(241, 241, 241);
     border-top: 1px solid #465892;
     border-bottom: 1px solid #465892;
@@ -271,6 +279,12 @@
     #portada a {
         margin: auto;
         margin-top: 2rem;
+    }
+
+    #portada img {
+        width: 500px;
+        height: 500px;
+        margin: auto;
     }
 }
 

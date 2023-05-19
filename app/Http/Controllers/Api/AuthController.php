@@ -69,15 +69,6 @@ class AuthController extends Controller
         }
     }
 
-
-    public function userProfile()
-    {
-        return response()->json([
-            "userData" => auth()->user()
-        ], Response::HTTP_OK);
-    }
-
-
     public function logout(Request $request)
     {
         $cookie = cookie('cookie_token', null, -1);

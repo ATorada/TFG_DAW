@@ -21,13 +21,23 @@ class PurchaseController extends Controller
         $response = app()->handle($request);
 
         $data = json_decode($response->getContent(), true);
-
         //Por cada compra calcula cuanto dinero costará llegar a la meta (amount/meses)
+
         foreach ($data as $key => $value) {
+            try {
                 $data[$key]['period'] = date('Y-m-d', strtotime($value['period']));
-                $diff = date_diff(date_create($data[$key]['period']), date_create(date('Y-m-01')));
-                $months = $diff->format('%m');
-                $data[$key]['cost'] = $value['amount'] / $months;
+                //Si el periodo es del mes que viene del año actual, se calcula el costo mensual
+                if (date('Y-m', strtotime($data[$key]['period'])) == date('Y-m', strtotime('+1 month'))) {
+                    $diff = date_diff(date_create($data[$key]['period']), date_create(date('Y-m-01')));
+                    $months = $diff->format('%m');
+                    $data[$key]['cost'] = $value['amount'] / $months;
+                } else {
+                    //Borra la compra si el periodo es de meses anteriores
+                    unset($data[$key]);
+                }
+            } catch (\Throwable $th) {
+
+            }
         }
 
         app()->instance('request', $originalRequest);

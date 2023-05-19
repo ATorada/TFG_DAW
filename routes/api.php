@@ -22,7 +22,7 @@ Route::post('login', [Api\AuthController::class, 'login']);
 Route::post('register', [Api\AuthController::class, 'register']);
 
 Route::group(['middleware' => ['auth:sanctum']], function ($request) {
-    Route::get('user/profile', [Api\AuthController::class, 'userProfile']);
+    Route::get('user/profile', [Api\UserController::class, 'userProfile']);
     Route::post('logout', [Api\AuthController::class, 'logout']);
 
     Route::apiResource('finances', Api\FinanceController::class);

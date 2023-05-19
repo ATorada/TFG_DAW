@@ -145,8 +145,8 @@ class FinanceController extends Controller
     public function getIncome(){
         $user = auth()->user();
         $result = [];
-        $finances = Finance::where('id_user', $user->id)->where('is_income', 1)->get();
         $total = 0;
+        $finances = Finance::where('id_user', $user->id)->where('is_income', 1)->get();
         foreach ($finances as $finance) {
             $total += $finance->amount;
         }

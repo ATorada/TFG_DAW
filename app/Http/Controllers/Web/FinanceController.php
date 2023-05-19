@@ -23,22 +23,36 @@ class FinanceController extends Controller
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
         $userData = json_decode($response->getContent(), true)['userData'];
-
         //Ahora hace una petición API /api/income para obtener los ingresos
         $request = Request::create('/api/income', 'GET');
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
         //Lo añade a la variable userData dentro del array userData en una key llamada income
-        $userData['income'] = json_decode($response->getContent(), true)['total'];
+        $incomes = json_decode($response->getContent(), true)['income'];
+        //Recorre incomes y suma a $userData['income'] todos los ingresos de este mes y año
+        $userData['income'] = 0;
+        foreach ($incomes as $key => $value) {
+            if (date('Y-m', strtotime($value['period'])) == date('Y-m')) {
+                $userData['income'] += $value['amount'];
+            }
+        }
 
         //Ahora hace una petición API /api/expenses para obtener los gastos
         $request = Request::create('/api/expenses', 'GET');
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
         //Lo añade a la variable userData dentro del array userData en una key llamada expenses
-        $userData['expenses'] = json_decode($response->getContent(), true)['total'];
+        $expenses = json_decode($response->getContent(), true)['expenses'];
+        //Recorre expenses y suma a $userData['expenses'] todos los gastos de este mes y año
+        $userData['expenses'] = 0;
+        foreach ($expenses as $key => $value) {
+            if (date('Y-m', strtotime($value['period'])) == date('Y-m')) {
+                $userData['expenses'] += $value['amount'];
+            }
+        }
         $userData['flexible'] = $userData['income'] - $userData['expenses'];
         app()->instance('request', $originalRequest);
+
 
         return view('finanzas.index', ['data' => $userData]);
     }
@@ -54,6 +68,13 @@ class FinanceController extends Controller
         $response = app()->handle($request);
         //Lo añade a la variable userData dentro del array userData en una key llamada income
         $data = json_decode($response->getContent(), true);
+
+        //Elimina los ingresos que no sean de este mes y año
+        foreach ($data['income'] as $key => $income) {
+            if (date('Y-m', strtotime($income['period'])) != date('Y-m')) {
+                unset($data['income'][$key]);
+            }
+        }
 
         app()->instance('request', $originalRequest);
 
@@ -78,6 +99,12 @@ class FinanceController extends Controller
         //Lo añade a la variable userData dentro del array userData en una key llamada income
         $data = json_decode($response->getContent(), true);
 
+        //Elimina los gastos que no sean de este mes y año
+        foreach ($data['expenses'] as $key => $expense) {
+            if (date('Y-m', strtotime($expense['period'])) != date('Y-m')) {
+                unset($data['expenses'][$key]);
+            }
+        }
         //Busca el gasto ahorro, en caso de que exista lo quita de expenses y lo añade a ahorro
         foreach ($data['expenses'] as $key => $expense) {
             if ($expense['name'] == 'ahorro') {

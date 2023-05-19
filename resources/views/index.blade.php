@@ -17,14 +17,8 @@
                 Comenzar ahora
             </a>
             @endif
-            <div>
-                <br>
-                <p class="left" style="margin-left: 150px;">Es más o menos <i>Responsive</i> </p>
-                <p class="right" style="margin-right: 10px;">La portada aún no está acabada uwu</p>
-                <br>
-                <br>
-                <p class="right" style="margin-right: 10px;">Espero que te guste aunque aún hay que meterle mucha mano después de 60h👉🏻👈🏻</p>
-            </div>
+            <br>
+            <img src="img/seccionPrincipal.png" alt="">
         </div>
         <div id="secciones">
             <div id="seccion-principal">

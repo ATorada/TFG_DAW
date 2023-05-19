@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -88,6 +89,13 @@ class UserController extends Controller
         } else {
             return response()->json(['error' => 'User not found'], 404);
         }
+    }
+
+    public function userProfile()
+    {
+        return response()->json([
+            "userData" => auth()->user()
+        ], Response::HTTP_OK);
     }
 
     // Posible in the future

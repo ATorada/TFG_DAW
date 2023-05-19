@@ -50,12 +50,24 @@ class HouseholdController extends Controller
             $expensesTotal = 0;
             foreach ($users as $user) {
                 $incomes = $user->finances()->where('compute_household', true)->where('is_income', true)->get();
+                //Elimina todos los incomes que no sean de este mes y año
+                foreach ($incomes as $key => $value) {
+                    if (date('Y-m', strtotime($value['period'])) != date('Y-m')) {
+                        unset($incomes[$key]);
+                    }
+                }
                 foreach ($incomes as $income) {
-                    $expensesTotal +=  $income->amount;
+                    $incomesTotal +=  $income->amount;
                 }
                 $expenses = $user->finances()->where('compute_household', true)->where('is_income', false)->get();
+                //Elimina todos los expenses que no sean de este mes y año
+                foreach ($expenses as $key => $value) {
+                    if (date('Y-m', strtotime($value['period'])) != date('Y-m')) {
+                        unset($expenses[$key]);
+                    }
+                }
                 foreach ($expenses as $expense) {
-                    $incomesTotal += $expense->amount;
+                    $expensesTotal += $expense->amount;
                 }
             }
             return response()->json(['income' => $incomesTotal, 'expenses' => $expensesTotal], 200);
