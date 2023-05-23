@@ -62,11 +62,15 @@ window.onload = function () {
                 })
             }).then(function (response) {
                 if (response.status == 201) {
-                    window.location.href = url + "/finances";
+                    return response.json();
                 } else {
                     throw response.json();
                 }
             }).then(function (data) {
+                //Obtiene el token y lo guarda en el localStorage
+                var token = data.token;
+                localStorage.setItem('token', token);
+                window.location.href = url + "/finances";
             }).catch(function (error) {
                 error.then(function (data) {
                     data = data.errors;

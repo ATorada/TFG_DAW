@@ -38,7 +38,7 @@ class AuthController extends Controller
         $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
-            'access_token' => $token,
+            'token' => $token,
             'user' => $user
         ], Response::HTTP_CREATED)->withCookie('cookie_token', $token, 60);
 
