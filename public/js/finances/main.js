@@ -161,6 +161,15 @@ function updateUI() {
             } catch (error) { }
         }
     }
+
+    //Si la tabla es id tabla-gastos, se actualiza el dinero total
+    if (table.id == 'tabla-gastos') {
+        let total = document.getElementById('dineroTotal');
+        //Obtiene la cantidad de la ultima celda de la ultima fila
+        let amount = table.rows[table.rows.length - 1].cells[table.rows[table.rows.length - 1].cells.length - 2].innerHTML;
+        total.innerHTML = parseFloat(total.innerHTML) - parseFloat(amount);
+    }
+
 }
 
 function showError(name) {
@@ -210,6 +219,13 @@ function throwErrorsUI(data) {
 function createEventListeners() {
     // A todos los tr's del tbody les añade un evento para que al hacer click se marquen con la clase table-selected y se guarde el id en un var
     document.querySelectorAll('tbody tr').forEach(function (tr) {
+        //Si el tr tiene un colspan de 5 o 6 no se le añade el evento
+        try {
+            if (tr.cells[0].colSpan == 5 || tr.cells[0].colSpan == 6) {
+                return;
+            }
+        } catch (error) {
+        }
         //Si el tr no tiene un evento click
         if (!tr.onclick) {
             tr.addEventListener('click', function (e) {
@@ -428,7 +444,7 @@ window.addEventListener('load', function () {
                 document.querySelector('#borrar').disabled = true;
                 document.querySelector('#borrar').classList.add('disabled');
                 //Si era la ultima fila añade una fila vacia con "No hay ingresos/gastos" dependiendo de si tiene 5 o 6 columnas
-
+                console.log(document.querySelectorAll('#tabla-gastos tbody tr').length);
                 if (document.querySelector('#tabla-ingresos')) {
                     if (document.querySelectorAll('#tabla-ingresos tbody tr').length == 1) {
                         var tr = document.createElement('tr');
@@ -454,7 +470,7 @@ window.addEventListener('load', function () {
             });
 
             //Si la tabla tiene de id tabla-gastos entonces se modifica dineroTotal y dineroDisponible
-            if (document.querySelector('#tabla-gastos')) {
+/*             if (document.querySelector('#tabla-gastos')) {
                 var total = document.querySelector('#dineroTotal');
                 var disponible = document.querySelector('#dineroDisponible');
                 total.innerHTML = `${parseFloat(total.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}`;
@@ -469,7 +485,7 @@ window.addEventListener('load', function () {
                     document.querySelector('#añadirAhorro').disabled = true;
                     document.querySelector('#añadirAhorro').classList.add('disabled');
                 }
-            }
+            } */
 
         });
     }

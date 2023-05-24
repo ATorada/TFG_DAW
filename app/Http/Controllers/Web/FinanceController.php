@@ -86,23 +86,36 @@ class FinanceController extends Controller
         $token = request()->session()->get('token');
 
         $originalRequest = request()->instance();
+
         //Ahora hace una petición API /api/income para obtener los ingresos
         $request = Request::create('/api/income', 'GET');
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
-        //Lo añade a la variable userData dentro del array userData en una key llamada income
-        $income = json_decode($response->getContent(), true)['total'];
+
+        $income = json_decode($response->getContent(), true);
+        $income['total'] = 0;
+        //Elimina los ingresos que no sean de este mes y año
+        foreach ($income['income'] as $key => $value) {
+            if (date('Y-m', strtotime($value['period'])) != date('Y-m')) {
+                unset($income[$key]);
+            } else {
+                $income['total'] += $value['amount'];
+            }
+        }
 
         $request = Request::create('/api/expenses', 'GET');
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
-        //Lo añade a la variable userData dentro del array userData en una key llamada income
+
         $data = json_decode($response->getContent(), true);
 
         //Elimina los gastos que no sean de este mes y año
+        $data['total'] = 0;
         foreach ($data['expenses'] as $key => $expense) {
             if (date('Y-m', strtotime($expense['period'])) != date('Y-m')) {
                 unset($data['expenses'][$key]);
+            } else {
+                $data['total'] += $expense['amount'];
             }
         }
         //Busca el gasto ahorro, en caso de que exista lo quita de expenses y lo añade a ahorro
@@ -113,8 +126,8 @@ class FinanceController extends Controller
                 unset($data['expenses'][$key]);
             }
         }
-
-        $data['flexible'] = $income - $data['total'];
+        $data['flexible'] = $income['total'] - $data['total'];
+        $data['income'] = $income['total'];
 
         app()->instance('request', $originalRequest);
         return view('finanzas.gastos', ['data' => $data]);
