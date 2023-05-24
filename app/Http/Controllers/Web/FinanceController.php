@@ -126,9 +126,14 @@ class FinanceController extends Controller
                 unset($data['expenses'][$key]);
             }
         }
+        if (!isset($data['ahorro'])) {
+            $data['ahorro'] = 0;
+            $data['ahorro_id'] = 0;
+        }
         $data['flexible'] = $income['total'] - $data['total'];
-        $data['income'] = $income['total'];
-
+        if ($income['total'] > 0){
+            $data['income'] = $income['total'];
+        }
         app()->instance('request', $originalRequest);
         return view('finanzas.gastos', ['data' => $data]);
     }

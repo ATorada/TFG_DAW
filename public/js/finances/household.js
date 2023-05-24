@@ -17,12 +17,18 @@ window.addEventListener('load', function() {
 
                 integrantes.innerHTML = "";
                 integrantes.style.height = "auto";
-                for (var i = 0; i < members.length; i++) {
+/*                 for (var i = 0; i < members.length; i++) {
                     var span = document.createElement('span');
                     var img = document.createElement('img');
                     img.src = "../img/account_placeholder.png";
                     img.alt = "";
                     span.appendChild(img);
+                    integrantes.appendChild(span);
+                } */
+                //Pone sus nombres en vez de su foto
+                for (var i = 0; i < members.length; i++) {
+                    var span = document.createElement('span');
+                    span.innerHTML = members[i];
                     integrantes.appendChild(span);
                 }
             });
@@ -84,12 +90,18 @@ window.addEventListener('load', function() {
 
                 integrantes.innerHTML = "";
                 integrantes.style.height = "auto";
-                for (var i = 0; i < members.length; i++) {
+/*                 for (var i = 0; i < members.length; i++) {
                     var span = document.createElement('span');
                     var img = document.createElement('img');
                     img.src = "../img/account_placeholder.png";
                     img.alt = "";
                     span.appendChild(img);
+                    integrantes.appendChild(span);
+                } */
+                //Pone sus nombres en vez de su foto
+                for (var i = 0; i < members.length; i++) {
+                    var span = document.createElement('span');
+                    span.innerHTML = members[i];
                     integrantes.appendChild(span);
                 }
             });

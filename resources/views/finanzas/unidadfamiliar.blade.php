@@ -36,9 +36,11 @@
                 <br>
                 <div id="integrantes">
                         @foreach ($data['members'] ?? [] as $user)
-                            <span><img src="../img/account_placeholder.png" alt="user"></span>
+                            {{-- <span><img src="../img/account_placeholder.png" alt="user"></span> --}}
+                            <span>{{ $user }}</span>
                         @endforeach
                 </div>
+
                 <br>
                 <p><span class="titulo">Ingresos: </span> <span id="income"> {{ $data['income'] ?? '' }} </span></p>
                 <p><span class="titulo">Gastos: </span> <span id="expenses"> {{ $data['expenses'] ?? '' }} </span></p>

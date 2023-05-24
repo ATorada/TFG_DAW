@@ -584,6 +584,7 @@ table select#tipo option {
     background-color: #33406bc2;
     border-radius: 0.5em;
     transition: 0.2s;
+    color: white;
 }
 
 /* #integrantes span:hover {

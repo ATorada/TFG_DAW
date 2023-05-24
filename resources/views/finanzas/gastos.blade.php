@@ -48,13 +48,12 @@
         <div id="ahorro">
             <h1>Ahorro</h1>
             <h2>Ahorro actual: <span id="ahorroActual" >{{ $data['ahorro'] ?? 0 }}</span></h2>
-            <h2>Dinero disponible: <span id="dineroDisponible">{{ $data['income'] - $data['ahorro'] }}</span>/<span id="dineroTotal">{{ $data['income'] }}</span></h2>
-
-            <input data-id="{{ $data['ahorro_id'] ?? 0 }}"" type="range" min="0" max="100" value="{{ intval(intval($data['ahorro'] ?? 0)*100/intval($data['income'] ?? 0)) }}" id="ahorroSlider">
-            <output>{{ intval(intval($data['ahorro'] ?? 0)*100/intval($data['income'] ?? 0)) }}%</output>
+            <h2>Dinero disponible: <span id="dineroDisponible">{{ (($data['income'] ?? 0) ? $data['income'] : 0) - $data['ahorro'] }}</span>/<span id="dineroTotal">{{ (($data['income'] ?? 0) ? $data['income'] : 0) }}</span></h2>
+            <input data-id="{{$data['ahorro_id']}}" type="range" min="0" max="100" value="{{ intval(intval($data['ahorro'])*100/intval((($data['income'] ?? 0) ? $data['income'] : 1))) }}" id="ahorroSlider">
+            <output>{{ intval(intval($data['ahorro'] ?? 0)*100/intval((($data['income'] ?? 0) ? $data['income'] : 1))) }}%</output>
 
             <div id="botones">
-            @if (isset($data['ahorro']))
+            @if ($data['ahorro'])
                 <button class="añadir" id="añadirAhorro" style="display: none">Añadir ahorro</button>
                 <button class="modificar" id="editarAhorro">Modificar ahorro</button>
             @else
