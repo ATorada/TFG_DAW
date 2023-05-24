@@ -13,7 +13,7 @@
                 <p class="error" id="limite">No puedes añadir más de 5 compras grandes</p>
                 <p class="error" data-name="name">El campo concepto es obligatorio y debe ser menor de 50 caracteres</p>
                 <input type="text" name="name" id="name" placeholder="Concepto">
-                <p class="error" data-name="amount">El campo cantidad es obligatorio y debe ser un número positivo</p>
+                <p class="error" data-name="amount">El campo cantidad es obligatorio y debe ser un número positivo menor de 100000</p>
                 <input type="number" name="amount" id="amount" placeholder="Cantidad">
                 <p class="error" data-name="period">El campo periodo es obligatorio y debe ser una fecha posterior a este mes</p>
                 <input type="date" name="period" id="period" placeholder="Periodo">

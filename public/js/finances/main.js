@@ -353,7 +353,7 @@ window.addEventListener('load', function () {
                                 const span1 = document.createElement('span');
                                 span1.classList.add('titulo');
                                 let period = new Date(data.period);
-                                span1.innerHTML = period.getFullYear() + '-' + period.getMonth() + '-' + period.getDate();
+                                span1.innerHTML = period.getFullYear() + '-' + (period.getMonth() + 1) + '-' + '01';
                                 p1.appendChild(span1);
 
                                 const p2 = document.createElement('p');
@@ -377,8 +377,10 @@ window.addEventListener('load', function () {
                                 //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
                                 const date = new Date();
                                 const date2 = new Date(data.period);
-                                const diff = date2.getMonth() - date.getMonth();
+                                const diff = date2.getMonth()+1 - date.getMonth();
                                 span6.innerHTML = `${data.amount / diff}€`;
+                                //Redondea el resultado a 2 decimales pasando el innerHTML a float
+                                span6.innerHTML = Math.round( parseFloat(span6.innerHTML) * 100) / 100 + '€';
                                 p3.append(span3, span4, span5, span6);
 
                                 const div2 = document.createElement('div');
@@ -393,11 +395,11 @@ window.addEventListener('load', function () {
                                     fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
                                 });
 
-                                const button2 = document.createElement('button');
+/*                                 const button2 = document.createElement('button');
                                 button2.classList.add('modificar');
-                                button2.innerHTML = 'Modificar';
+                                button2.innerHTML = 'Modificar'; */
 
-                                div2.append(button1, button2);
+                                div2.append(button1);
                                 div.append(img, p1, p2, br, p3, div2);
                                 document.querySelector('.main-content').appendChild(div);
 

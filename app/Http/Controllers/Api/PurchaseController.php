@@ -28,7 +28,7 @@ class PurchaseController extends Controller
             'image' => 'sometimes|image|mimes:png',
             'name' => 'required|string|max:50',
             'period' => 'required|date|after_or_equal:' . date('Y-m-d', strtotime('+1 month', strtotime(date('Y-m-01')))),
-            'amount' => 'required|numeric|min:0',
+            'amount' => 'required|numeric|min:0|max:99999.99',
         ]);
 
         $user = auth()->user();

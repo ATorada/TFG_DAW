@@ -11,7 +11,7 @@
     <p><span class="titulo">{{ $compragrande['name'] }}</span></p>
     <br>
     <p><span class="titulo">Total: </span> {{ $compragrande['amount'] }}€<span class="titulo"> - €/mes:</span>
-        {{ $compragrande['cost'] }}€</p>
+        {{ number_format($compragrande['cost'], 2) }}€</p>
     <div class="botones">
         <button class="borrar">Borrar</button>
         {{-- <button class="modificar">Modificar</button> --}}
