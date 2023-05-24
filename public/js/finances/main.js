@@ -2,6 +2,7 @@ var url = window.location.href.split("/")[0] + "//" + window.location.href.split
 let modal = null;
 let table = null;
 let form = null;
+var elementoSeleccionado = null;
 
 function createCheckbox(id, checked) {
     var input = document.createElement('input');
@@ -13,14 +14,14 @@ function createCheckbox(id, checked) {
     input.addEventListener('click', function (e) {
         try {
             editElement(this, this.name, this.checked ? 1 : 0);
-        } catch (error) {}
+        } catch (error) { }
     });
     return input;
 }
 
 function editElement(element, name, value) {
     var id = element.parentNode.parentNode.getElementsByTagName('td')[0].innerHTML;
-    fetchFinance( name + '=' + value, 'PUT', '/api/finances/' + id).then(function (data) {
+    fetchFinance(name + '=' + value, 'PUT', '/api/finances/' + id).then(function (data) {
         var row = element.parentNode.parentNode;
         row.classList.add('nuevo');
         setTimeout(function () {
@@ -57,7 +58,7 @@ async function fetchFinance(data, method, route) {
         if (response.status == 201 || response.status == 200) {
             return response.json();
         }
-        else if(response.status == 204){
+        else if (response.status == 204) {
             return response;
         }
         throw response.json();
@@ -95,7 +96,7 @@ function addRowToTable(data) {
             select.addEventListener('change', function (e) {
                 try {
                     editElement(this, this.name, this.value);
-                } catch (error) {}
+                } catch (error) { }
             });
 
             var options = ['alimentacion', 'vivienda', 'transporte', 'ocio', 'comunicaciones', 'salud', 'educacion', 'otros'];
@@ -120,6 +121,7 @@ function addRowToTable(data) {
         } else {
             cell.innerHTML = data[keys[i]];
         }
+        createEventListeners();
     }
 
     var cell = row.insertCell(0);
@@ -156,7 +158,7 @@ function updateUI() {
             form[i].classList.remove('errorInput');
             try {
                 hideError(form[i].name);
-            } catch (error) {}
+            } catch (error) { }
         }
     }
 }
@@ -170,39 +172,61 @@ function hideError(name) {
 }
 
 function throwErrorsUI(data) {
-        if (data.errors) {
-            for (var i = 0; i < form.length; i++) {
-                if (form[i].type != 'submit') {
-                    if (data.errors[form[i].name]) {
-                        form[i].classList.add('errorInput');
-                        try {
-                            showError(form[i].name);
-                        } catch (error) {}
-                    } else {
-                        form[i].classList.remove('errorInput');
-                        try {
-                            hideError(form[i].name);
-                        } catch (error) {}
-                    }
-                }
-            }
-        } else {
-            form.name.classList.add('errorInput');
-            showError('name');
-            for (var i = 1; i < form.length; i++) {
-                if (form[i].type != 'submit') {
+    if (data.errors) {
+        for (var i = 0; i < form.length; i++) {
+            if (form[i].type != 'submit') {
+                if (data.errors[form[i].name]) {
+                    form[i].classList.add('errorInput');
+                    try {
+                        showError(form[i].name);
+                    } catch (error) { }
+                } else {
                     form[i].classList.remove('errorInput');
                     try {
                         hideError(form[i].name);
-                    } catch (error) {}
+                    } catch (error) { }
                 }
             }
-            if(data.error.includes('(5)')){
-                document.querySelector('#limite').style.display = "block";
-                hideError('name');
-                form.name.classList.remove('errorInput');
+        }
+    } else {
+        form.name.classList.add('errorInput');
+        showError('name');
+        for (var i = 1; i < form.length; i++) {
+            if (form[i].type != 'submit') {
+                form[i].classList.remove('errorInput');
+                try {
+                    hideError(form[i].name);
+                } catch (error) { }
             }
         }
+        if (data.error.includes('(5)')) {
+            document.querySelector('#limite').style.display = "block";
+            hideError('name');
+            form.name.classList.remove('errorInput');
+        }
+    }
+}
+
+function createEventListeners() {
+    // A todos los tr's del tbody les añade un evento para que al hacer click se marquen con la clase table-selected y se guarde el id en un var
+    document.querySelectorAll('tbody tr').forEach(function (tr) {
+        //Si el tr no tiene un evento click
+        if (!tr.onclick) {
+            tr.addEventListener('click', function (e) {
+                if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TD' && e.target.colSpan == 5 || e.target.nodeName == 'TD' && e.target.colSpan == 6) {
+                    return;
+                }
+                if (elementoSeleccionado) {
+                    elementoSeleccionado.classList.remove('table-selected');
+                }
+                elementoSeleccionado = this;
+                this.classList.add('table-selected');
+                //Activa el boton de borrar
+                document.querySelector('#borrar').disabled = false;
+                document.querySelector('#borrar').classList.remove('disabled');
+            });
+        }
+    });
 }
 
 window.addEventListener('load', function () {
@@ -214,17 +238,17 @@ window.addEventListener('load', function () {
     const enviar = document.getElementsByClassName('añadir')[0];
 
     // Añadir evento a los inputs
-    addEventToElements('input', 'click', function(e) {
+    addEventToElements('input', 'click', function (e) {
         try {
             editElement(this, this.name, this.checked ? 1 : 0);
-        } catch (error) {}
+        } catch (error) { }
     });
 
     // Añadir evento a los selects
-    addEventToElements('select', 'change', function(e) {
+    addEventToElements('select', 'change', function (e) {
         try {
             editElement(this, this.name, this.value);
-        } catch (error) {}
+        } catch (error) { }
     });
 
     // Se encarga de añadir el cerrar y el abrir del modal
@@ -245,7 +269,7 @@ window.addEventListener('load', function () {
     }
 
     // Se encarga de añadir obtener los datos del formulario y enviarlos
-    if(enviar && enviar.textContent == 'Añadir'){
+    if (enviar && enviar.textContent == 'Añadir') {
         enviar.addEventListener('click', async function (e) {
             e.preventDefault();
             const data = new URLSearchParams(new FormData(form));
@@ -259,16 +283,17 @@ window.addEventListener('load', function () {
             //Si data tiene period, es una compra grande
             if (!data.has('period')) {
                 await fetchFinance(data, 'POST', '/api/finances')
-                .then(function(data) {
-                addRowToTable(data);
-                updateUI();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    error.then(function (data) {
-                        throwErrorsUI(data);
+                    .then(function (data) {
+                        addRowToTable(data);
+                        updateUI();
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        error.then(function (data) {
+                            throwErrorsUI(data);
+                        });
                     });
-                });
             } else {
                 const data = new FormData(form);
                 fetch('/api/purchases', {
@@ -278,90 +303,90 @@ window.addEventListener('load', function () {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     body: data
-                    })
-                .then(function(data) {
-                    if (data.ok) {
-                        data.json().then(function (data) {
-                        const div = document.createElement('div');
-                        div.classList.add('compra-grande');
-
-                        const img = document.createElement('img');
-                        //Si el form tenía una imagen, la añade, sino, pone una por defecto
-
-                        if (!form.image.value) {
-                            img.src = '../img/comprasgrandes/compragrande_placeholder.png';
-                            img.alt = '';
-                        } else {
-                            img.src = 'http://81.203.93.98/storage/purchases/purchase_' + data.id + '.png';
-                        }
-
-                        const p1 = document.createElement('p');
-                        const span1 = document.createElement('span');
-                        span1.classList.add('titulo');
-                        let period = new Date(data.period);
-                        span1.innerHTML =  period.getFullYear() + '-' + period.getMonth() + '-' + period.getDate();
-                        p1.appendChild(span1);
-
-                        const p2 = document.createElement('p');
-                        const span2 = document.createElement('span');
-                        span2.classList.add('titulo');
-                        span2.innerHTML = data.name;
-                        p2.appendChild(span2);
-
-                        const br = document.createElement('br');
-
-                        const p3 = document.createElement('p');
-                        const span3 = document.createElement('span');
-                        span3.classList.add('titulo');
-                        span3.innerHTML = 'Total: ';
-                        const span4 = document.createElement('span');
-                        span4.innerHTML = `${data.amount}€`;
-                        const span5 = document.createElement('span');
-                        span5.classList.add('titulo');
-                        span5.innerHTML = ' - €/mes:';
-                        const span6 = document.createElement('span');
-                        //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
-                        const date = new Date();
-                        const date2 = new Date(data.period);
-                        const diff = date2.getMonth() - date.getMonth();
-                        span6.innerHTML = `${data.amount / diff}€`;
-                        p3.append(span3, span4, span5, span6);
-
-                        const div2 = document.createElement('div');
-                        div2.classList.add('botones');
-
-                        const button1 = document.createElement('button');
-                        button1.classList.add('borrar');
-                        button1.innerHTML = 'Borrar';
-                        button1.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            div.remove();
-                            fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
-                        });
-
-                        const button2 = document.createElement('button');
-                        button2.classList.add('modificar');
-                        button2.innerHTML = 'Modificar';
-
-                        div2.append(button1, button2);
-                        div.append(img, p1, p2, br, p3, div2);
-                        document.querySelector('.main-content').appendChild(div);
-
-                        form.reset();
-                        modal.style.display = "none";
-                        document.querySelector('#limite').style.display = "none";
-                     });
-                    } else {
-                        throw data.json();
-                    }
                 })
-                .catch(function (error) {
-                    error.then(function (data) {
-                        throwErrorsUI(data);
+                    .then(function (data) {
+                        if (data.ok) {
+                            data.json().then(function (data) {
+                                const div = document.createElement('div');
+                                div.classList.add('compra-grande');
+
+                                const img = document.createElement('img');
+                                //Si el form tenía una imagen, la añade, sino, pone una por defecto
+
+                                if (!form.image.value) {
+                                    img.src = '../img/comprasgrandes/compragrande_placeholder.png';
+                                    img.alt = '';
+                                } else {
+                                    img.src = 'http://81.203.93.98/storage/purchases/purchase_' + data.id + '.png';
+                                }
+
+                                const p1 = document.createElement('p');
+                                const span1 = document.createElement('span');
+                                span1.classList.add('titulo');
+                                let period = new Date(data.period);
+                                span1.innerHTML = period.getFullYear() + '-' + period.getMonth() + '-' + period.getDate();
+                                p1.appendChild(span1);
+
+                                const p2 = document.createElement('p');
+                                const span2 = document.createElement('span');
+                                span2.classList.add('titulo');
+                                span2.innerHTML = data.name;
+                                p2.appendChild(span2);
+
+                                const br = document.createElement('br');
+
+                                const p3 = document.createElement('p');
+                                const span3 = document.createElement('span');
+                                span3.classList.add('titulo');
+                                span3.innerHTML = 'Total: ';
+                                const span4 = document.createElement('span');
+                                span4.innerHTML = `${data.amount}€`;
+                                const span5 = document.createElement('span');
+                                span5.classList.add('titulo');
+                                span5.innerHTML = ' - €/mes:';
+                                const span6 = document.createElement('span');
+                                //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
+                                const date = new Date();
+                                const date2 = new Date(data.period);
+                                const diff = date2.getMonth() - date.getMonth();
+                                span6.innerHTML = `${data.amount / diff}€`;
+                                p3.append(span3, span4, span5, span6);
+
+                                const div2 = document.createElement('div');
+                                div2.classList.add('botones');
+
+                                const button1 = document.createElement('button');
+                                button1.classList.add('borrar');
+                                button1.innerHTML = 'Borrar';
+                                button1.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    div.remove();
+                                    fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
+                                });
+
+                                const button2 = document.createElement('button');
+                                button2.classList.add('modificar');
+                                button2.innerHTML = 'Modificar';
+
+                                div2.append(button1, button2);
+                                div.append(img, p1, p2, br, p3, div2);
+                                document.querySelector('.main-content').appendChild(div);
+
+                                form.reset();
+                                modal.style.display = "none";
+                                document.querySelector('#limite').style.display = "none";
+                            });
+                        } else {
+                            throw data.json();
+                        }
+                    })
+                    .catch(function (error) {
+                        error.then(function (data) {
+                            throwErrorsUI(data);
+                        });
                     });
-                });
             }
-        } );
+        });
     }
 
     // Se encarga de ponerle al boton de salir que borre el token del localStorage y las cookies
@@ -379,24 +404,7 @@ window.addEventListener('load', function () {
     });
 
     if (document.querySelector('#borrar')) {
-        var elementoSeleccionado = null;
-        // A todos los tr's del tbody les añade un evento para que al hacer click se marquen con la clase table-selected y se guarde el id en un var
-        document.querySelectorAll('tbody tr').forEach(function (tr) {
-            tr.addEventListener('click', function (e) {
-                if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TD' && e.target.colSpan == 5 || e.target.nodeName == 'TD' && e.target.colSpan == 6) {
-                    return;
-                }
-                if (elementoSeleccionado) {
-                    elementoSeleccionado.classList.remove('table-selected');
-                }
-                elementoSeleccionado = this;
-                this.classList.add('table-selected');
-                //Activa el boton de borrar
-                document.querySelector('#borrar').disabled = false;
-                document.querySelector('#borrar').classList.remove('disabled');
-            });
-        } );
-
+        createEventListeners();
         //Si se hace click en el boton de borrar, borra el elemento seleccionado
         document.querySelector('#borrar').addEventListener('click', function (e) {
             e.preventDefault();
@@ -406,8 +414,30 @@ window.addEventListener('load', function () {
                 elementoSeleccionado = null;
                 document.querySelector('#borrar').disabled = true;
                 document.querySelector('#borrar').classList.add('disabled');
+                //Si era la ultima fila añade una fila vacia con "No hay ingresos/gastos" dependiendo de si tiene 5 o 6 columnas
 
-                //Si era la ultima fila, desactiva el boton de borrar
+                if (document.querySelector('#tabla-ingresos')) {
+                    if (document.querySelectorAll('#tabla-ingresos tbody tr').length == 1) {
+                        var tr = document.createElement('tr');
+                        var td = document.createElement('td');
+                        td.innerHTML = 'No hay ingresos';
+                        td.style.fontWeight = 'bold';
+                        td.colSpan = '5';
+                        tr.appendChild(td);
+                        document.querySelector('#tabla-ingresos tbody').appendChild(tr);
+                    }
+                }
+                else {
+                    if (document.querySelectorAll('#tabla-gastos tbody tr').length == 1) {
+                        var tr = document.createElement('tr');
+                        var td = document.createElement('td');
+                        td.innerHTML = 'No hay gastos';
+                        td.style.fontWeight = 'bold';
+                        td.colSpan = '6';
+                        tr.appendChild(td);
+                        document.querySelector('#tabla-gastos tbody').appendChild(tr);
+                    }
+                }
             });
 
             //Si la tabla tiene de id tabla-gastos entonces se modifica dineroTotal y dineroDisponible
@@ -428,7 +458,7 @@ window.addEventListener('load', function () {
                 }
             }
 
-        } );
+        });
     }
 
 });
