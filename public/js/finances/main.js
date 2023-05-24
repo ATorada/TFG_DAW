@@ -229,6 +229,19 @@ function createEventListeners() {
     });
 }
 
+//Añade un key listener, si se presiona escape se deselecciona el elemento seleccionado
+document.addEventListener('keydown', function (e) {
+    if (e.key == 'Escape') {
+        if (elementoSeleccionado) {
+            elementoSeleccionado.classList.remove('table-selected');
+            elementoSeleccionado = null;
+            document.querySelector('#borrar').disabled = true;
+            document.querySelector('#borrar').classList.add('disabled');
+        }
+    }
+});
+
+
 window.addEventListener('load', function () {
     table = document.getElementsByTagName('table')[0];
     form = document.getElementsByTagName('form')[0];
