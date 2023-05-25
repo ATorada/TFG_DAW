@@ -11,7 +11,7 @@
                 <h1>Añadir finanza</h1>
                 <p class="error" data-name="name">El campo concepto es obligatorio, no debe repetirse y debe ser menor de 50 caracteres</p>
                 <input type="text" name="name" id="name" placeholder="Concepto">
-                <p class="error" data-name="amount">El campo cantidad es obligatorio y debe ser un número positivo</p>
+                <p class="error" data-name="amount">El campo cantidad es obligatorio y debe ser un número positivo menor de 100000</p>
                 <input type="number" name="amount" id="amount" placeholder="Cantidad">
                 <div class="checkbox-container">
                     <input type="checkbox" name="constant" id="constant" value="1">

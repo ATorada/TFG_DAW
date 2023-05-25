@@ -108,6 +108,8 @@ window.addEventListener('load', function() {
 
             //Obtiene el balance /api/households/balance en income modifica un texto de id income y un texto de id expenses
             fetchFinance(null, 'GET', '/api/households/balance').then(function (data) {
+                data.income = data.income+" €";
+                data.expenses = data.expenses+"€";
                 document.getElementById('income').innerHTML = data.income;
                 document.getElementById('expenses').innerHTML = data.expenses;
             });
@@ -124,6 +126,7 @@ window.addEventListener('load', function() {
             //Pinta el input de rojo
             form.elements[0].classList.add('errorInput');
         });
+
     }
 
 });

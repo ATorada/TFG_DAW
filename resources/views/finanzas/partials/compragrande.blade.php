@@ -7,10 +7,10 @@
 
     <img src="{{ $imageExists ? asset($imagePath) : '../img/comprasgrandes/compragrande_placeholder.png' }}"
         alt="">
-    <p><span class="titulo">{{ $compragrande['period'] }}</span></p>
-    <p><span class="titulo">{{ $compragrande['name'] }}</span></p>
+    <p><span class="titulo">{{$compragrande['created_at']}} - {{ $compragrande['period'] }}</span></p>
+    <p><span class="titulo">  <u>{{ $compragrande['name'] }}</u></span></p>
     <br>
-    <p><span class="titulo">Total: </span> {{ $compragrande['amount'] }}€<span class="titulo"> - €/mes:</span>
+    <p><span class="titulo">Total: </span> {{ number_format($compragrande['payed'],2) }} / {{ number_format($compragrande['amount'],2) }}€<span class="titulo"> <br> €/mes:</span>
         {{ number_format($compragrande['cost'], 2) }}€</p>
     <div class="botones">
         <button class="borrar">Borrar</button>

@@ -24,7 +24,7 @@ class FinanceController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:50',
             'category' => 'nullable|string|in:otros,alimentacion,vivienda,transporte,comunicaciones,ocio,salud,educacion,ahorro',
-            'amount' => 'required|numeric|min:0',
+            'amount' => 'required|numeric|min:0|max:99999.99',
             'constant' => 'boolean',
             'is_income' => 'boolean',
             'compute_household' => 'boolean',

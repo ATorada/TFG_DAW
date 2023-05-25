@@ -26,14 +26,11 @@ class PurchaseController extends Controller
         foreach ($data as $key => $value) {
             try {
                 $data[$key]['period'] = date('Y-m-d', strtotime($value['period']));
-                //Si el periodo es de algún mes siguiente al actual, calcula el coste mensual
-                if (date('Y-m', strtotime($data[$key]['period'])) >= date('Y-m')) {
-                    $diff = date_diff(date_create($data[$key]['period']), date_create(date('Y-m-01')));
-                    $months = $diff->format('%m');
-                    $data[$key]['cost'] = $value['amount'] / $months;
-                } else {
-                    //Borra la compra si el periodo es de meses anteriores
+                if (!date('Y-m', strtotime($data[$key]['period'])) >= date('Y-m')) {
                     unset($data[$key]);
+                } else {
+                    $data[$key]['created_at'] = date('Y-m', strtotime($value['created_at']));
+                    $data[$key]['period'] = date('Y-m', strtotime($data[$key]['period']));
                 }
             } catch (\Throwable $th) {
 

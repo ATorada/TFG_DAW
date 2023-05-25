@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
+use Carbon\Carbon;
 
 class PurchaseController extends Controller
 {
@@ -15,6 +16,31 @@ class PurchaseController extends Controller
     {
         // Lista todas las purchases del usuario
         $purchases = Purchase::where('id_user', auth()->user()->id)->get();
+        //Por cada purchase añade compragrande['cost'] que es lo que tiene que pagar que se hace en base a los meses de created_at y period
+        foreach ($purchases as $purchase) {
+            $cost = 0;
+            //Los crea en formato datetime
+            $period =  Carbon::parse(date('Y-m-d', strtotime($purchase['period'])));
+            $created_at = Carbon::parse(date('Y-m-1', strtotime($purchase['created_at'])));
+            //La diferencia de meses entre periodo de la compra y el periodo de creacion de la compra
+            $months = $period->diffInMonths($created_at);
+            if ($months == 0) {
+                $cost = $purchase['amount'];
+            } else {
+                $cost = $purchase['amount'] / $months;
+            }
+            $purchase['cost'] = $cost;
+            //Se crea $purchase['cost'] que es lo ya tiene pagado en base de cuando se creo la purchase y el periodo actual
+            $cost = 0;
+            $period = Carbon::parse(date('Y-m-d'));
+            $months = $period->diffInMonths($created_at);
+            if ($months == 0) {
+                $cost = 0;
+            } else {
+                $cost = $purchase['amount'] - ($purchase['amount'] - ($purchase['cost'] * $months));
+            }
+            $purchase['payed'] = $cost;
+        }
         return response()->json($purchases, 200);
     }
 

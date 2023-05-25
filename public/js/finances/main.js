@@ -66,10 +66,16 @@ async function fetchFinance(data, method, route) {
 }
 
 function addRowToTable(data) {
-    if (document.getElementsByTagName('td')[0].getAttribute('colspan')) {
-        document.getElementsByTagName('td')[0].remove();
+    try {
+        //Obtiene el tr del tbody, si tiene un atributo colspan es que no hay datos entonces lo elimina
+        if (table.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('td')[0].getAttribute('colspan') != null) {
+            table.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].remove();
+        }
+    } catch (error) {
+
     }
-    var row = table.insertRow(-1);;
+
+    var row = table.getElementsByTagName('tbody')[0].insertRow(-1);
     delete data.is_income;
     delete data.period;
     delete data.id_user
@@ -116,6 +122,9 @@ function addRowToTable(data) {
             continue;
         }
         var cell = row.insertCell(i);
+        if (keys[i] == 'amount') {
+            data[keys[i]] = parseFloat(data[keys[i]]).toFixed(2);
+        }
         if (keys[i] == 'constant' || keys[i] == 'compute_household') {
             cell.appendChild(createCheckbox(keys[i], data[keys[i]]));
         } else {
@@ -353,13 +362,15 @@ window.addEventListener('load', function () {
                                 const span1 = document.createElement('span');
                                 span1.classList.add('titulo');
                                 let period = new Date(data.period);
-                                span1.innerHTML = period.getFullYear() + '-' + (period.getMonth() + 1) + '-' + '01';
+                                const today = new Date();
+                                span1.innerHTML = today.getFullYear() + "-" + (today.getMonth()+1) + " - " +period.getFullYear() + '-' + (period.getMonth() + 1)
                                 p1.appendChild(span1);
 
                                 const p2 = document.createElement('p');
                                 const span2 = document.createElement('span');
                                 span2.classList.add('titulo');
                                 span2.innerHTML = data.name;
+                                span2.style.textDecoration = 'underline';
                                 p2.appendChild(span2);
 
                                 const br = document.createElement('br');
@@ -369,18 +380,18 @@ window.addEventListener('load', function () {
                                 span3.classList.add('titulo');
                                 span3.innerHTML = 'Total: ';
                                 const span4 = document.createElement('span');
-                                span4.innerHTML = `${data.amount}€`;
+                                //Data amount pero en formato decimal 2
+                                let amount = Math.round( parseFloat(data.amount) * 100) / 100;
+                                span4.innerHTML = `0.00 / ${amount.toFixed(2)}€`;
                                 const span5 = document.createElement('span');
                                 span5.classList.add('titulo');
-                                span5.innerHTML = ' - €/mes:';
+                                span5.innerHTML = '<br>€/mes: ';
                                 const span6 = document.createElement('span');
                                 //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
                                 const date = new Date();
                                 const date2 = new Date(data.period);
-                                const diff = date2.getMonth()+1 - date.getMonth();
-                                span6.innerHTML = `${data.amount / diff}€`;
-                                //Redondea el resultado a 2 decimales pasando el innerHTML a float
-                                span6.innerHTML = Math.round( parseFloat(span6.innerHTML) * 100) / 100 + '€';
+                                const diff = date2.getMonth() - date.getMonth();
+                                span6.innerHTML = `${(amount / diff).toFixed(2)}€`;
                                 p3.append(span3, span4, span5, span6);
 
                                 const div2 = document.createElement('div');
@@ -446,9 +457,8 @@ window.addEventListener('load', function () {
                 document.querySelector('#borrar').disabled = true;
                 document.querySelector('#borrar').classList.add('disabled');
                 //Si era la ultima fila añade una fila vacia con "No hay ingresos/gastos" dependiendo de si tiene 5 o 6 columnas
-                console.log(document.querySelectorAll('#tabla-gastos tbody tr').length);
                 if (document.querySelector('#tabla-ingresos')) {
-                    if (document.querySelectorAll('#tabla-ingresos tbody tr').length == 1) {
+                    if (document.querySelectorAll('#tabla-ingresos tbody tr').length == 0) {
                         var tr = document.createElement('tr');
                         var td = document.createElement('td');
                         td.innerHTML = 'No hay ingresos';
@@ -459,7 +469,7 @@ window.addEventListener('load', function () {
                     }
                 }
                 else {
-                    if (document.querySelectorAll('#tabla-gastos tbody tr').length == 1) {
+                    if (document.querySelectorAll('#tabla-gastos tbody tr').length == 0) {
                         var tr = document.createElement('tr');
                         var td = document.createElement('td');
                         td.innerHTML = 'No hay gastos';

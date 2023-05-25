@@ -42,8 +42,8 @@
                 </div>
 
                 <br>
-                <p><span class="titulo">Ingresos: </span> <span id="income"> {{ $data['income'] ?? '' }} </span></p>
-                <p><span class="titulo">Gastos: </span> <span id="expenses"> {{ $data['expenses'] ?? '' }} </span></p>
+                <p><span class="titulo">Ingresos: </span> <span id="income"> {{ $data['income'] ?? '' }}€</span></p>
+                <p><span class="titulo">Gastos: </span> <span id="expenses"> {{ $data['expenses'] ?? '' }}€</span></p>
                 <div class="botones">
                     <button class="borrar">Salir</button>
                 </div>
