@@ -8,10 +8,12 @@ use App\Models\Household;
 
 class HouseholdController extends Controller
 {
-
+    /**
+     * Se encarga de crear un household
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
-
-    //Crea una transaccion en la que crea un household y lo asocia al usuario
     {
         $household = Household::create();
 
@@ -22,7 +24,10 @@ class HouseholdController extends Controller
         return response()->json($household, 200);
     }
 
-    //Método que devuelve el nombre de los usuarios de un household
+    /**
+     * Se encarga de añadir un usuario a un household
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMembers()
     {
         $id = auth()->user()->id_household;
@@ -39,7 +44,10 @@ class HouseholdController extends Controller
         }
     }
 
-    //Obtiene de cada usuario de la household todos los gastos e ingresos y los suma
+    /**
+     * Se encarga de añadir un usuario a un household
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getBalance()
     {
         $id = auth()->user()->id_household;
@@ -75,8 +83,11 @@ class HouseholdController extends Controller
             return response()->json(['error' => 'Household not found'], 404);
         }
     }
+
     /**
-     * Remove the specified resource from storage.
+     * Se encarga de añadir un usuario a un household
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id)
     {
@@ -89,6 +100,12 @@ class HouseholdController extends Controller
         }
     }
 
+    /**
+     * Se encarga de añadir un usuario a un household
+     * @param Request $request
+     * @param string $uuid
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function joinHousehold(Request $request, string $uuid)
     {
         $household = Household::where('uuid', $uuid)->first();

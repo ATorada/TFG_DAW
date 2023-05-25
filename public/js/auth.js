@@ -1,9 +1,11 @@
-// Este archivo obtiene los botones acceder y registrar y les añade un evento click
 var url = window.location.href.split("/")[0] + "//" + window.location.href.split("/")[2];
 
 window.onload = function () {
+    //Obtiene los elementos
     var btnLogin = document.getElementById('acceder');
     var btnRegister = document.getElementById('registrar');
+
+    //Si existe el botón de iniciar sesión
     if (btnLogin) {
         btnLogin.addEventListener('click', function (e) {
             e.preventDefault();
@@ -12,36 +14,36 @@ window.onload = function () {
             var checkbox = document.getElementById('checkbox');
 
             //Hace una petición a api/login con los datos del formulario
-                fetch(url + '/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password,
-                        remember_me: checkbox.checked
-                    })
-                }).then(function (response) {
-                    //Si la respuesta es correcta
-                    if (response.status == 200) {
-                        return response.json();
-                    } else {
-                        document.getElementById('email').classList.add('errorInput');
-                        document.getElementById('password').classList.add('errorInput');
-                        document.getElementsByClassName('error')[0].style.display = "block";
-                    }
-                }).then(function (data) {
-                    //Obtiene el token y lo guarda en el localStorage
-                    var token = data.token;
-                    localStorage.setItem('token', token);
-                    window.location.href = url + "/finances";
-                }).catch(function (error) {
-                });
+            fetch(url + '/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    remember_me: checkbox.checked
+                })
+            }).then(function (response) {
+                if (response.status == 200) {
+                    return response.json();
+                } else {
+                    document.getElementById('email').classList.add('errorInput');
+                    document.getElementById('password').classList.add('errorInput');
+                    document.getElementsByClassName('error')[0].style.display = "block";
+                }
+            }).then(function (data) {
+                //Obtiene el token y lo guarda en el localStorage
+                var token = data.token;
+                localStorage.setItem('token', token);
+                window.location.href = url + "/finances";
+            }).catch(function (error) {
+            });
         });
     }
+    //Si existe el botón de registrar
     if (btnRegister) {
-        btnRegister.addEventListener('click', function (e){
+        btnRegister.addEventListener('click', function (e) {
             e.preventDefault();
             var user = document.getElementById('user').value;
             var email = document.getElementById('email').value;

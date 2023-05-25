@@ -1,6 +1,5 @@
 window.addEventListener('load', function () {
-
-    //Obtiene el input de id buscar y le añade un evento keyup en el que filtra la tabla para mostrar solo las compras que coincidan con el valor del input
+    //Obtiene el input de id buscar y le añade un evento keyup en el que filtra la tabla para mostrar solo las compras que coincidan
     var inputBuscar = document.getElementById('buscar');
     inputBuscar.addEventListener('keyup', function (e) {
         var filter = inputBuscar.value.toUpperCase();
@@ -19,9 +18,7 @@ window.addEventListener('load', function () {
                     }
                 }
             }
-
         }
     }
     );
-
 });

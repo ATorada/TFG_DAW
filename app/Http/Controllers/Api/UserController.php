@@ -11,10 +11,14 @@ use Illuminate\Http\Response;
 class UserController extends Controller
 {
 
+    /**
+     * Se encarga de actualizar un usuario
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         $id = $request->user()->id;
-
 
         $validatedData = $request->validate([
             'user' => 'sometimes|max:15|unique:users|min:3',
@@ -31,21 +35,23 @@ class UserController extends Controller
         $user = User::find($id);
         if ($user) {
 
+            //Comprueba la contraseña
             if ($request->password) {
                 $validatedData['password'] = Hash::make($request->password);
             }
 
+            //Se guardan los datos por separado para que no se guarden vacios
             if ($request->user) {
                 $user->user = $validatedData['user'];
                 $user->save();
             }
 
-            if($request->password){
+            if ($request->password) {
                 $user->password = $validatedData['password'];
                 $user->save();
             }
 
-            if($request->image){
+            if ($request->image) {
                 if (file_exists(storage_path('app/public/users/' . $user->id . '.png'))) {
                     unlink(storage_path('app/public/users/' . $user->id . '.png'));
                 }
@@ -57,9 +63,12 @@ class UserController extends Controller
         } else {
             return response()->json(['error' => 'User not found'], 404);
         }
-
     }
 
+    /**
+     * Se encarga de obtener un usuario
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getHousehold()
     {
         $user = auth()->user();
@@ -75,6 +84,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Se encarga de añadir un usuario a un household
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function leaveHousehold(Request $request)
     {
         $user = User::find($request->user()->id);
@@ -91,6 +105,10 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Se encarga de añadir un usuario a un household
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function userProfile()
     {
         return response()->json([

@@ -11,32 +11,19 @@
 				{
 					"name": "List Finances",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/finances/1",
+							"raw": "http://localhost:80/api/finances/",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
 								"finances",
-								"1"
+								""
 							]
 						}
 					},
@@ -45,26 +32,13 @@
 				{
 					"name": "Get Finance",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/finances/1/",
+							"raw": "http://localhost:80/api/finances/1/",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
@@ -80,16 +54,6 @@
 				{
 					"name": "Add Finance",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "22|NUWxkltWCk33frQvoYhh8DyP8fG8ykLd78k8hefz",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -97,19 +61,19 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "ahorro",
+									"value": "Prueba",
 									"type": "default"
 								},
 								{
 									"key": "period",
 									"value": "2022-10-23",
-									"type": "default"
+									"type": "default",
+									"disabled": true
 								},
 								{
 									"key": "category",
 									"value": "",
-									"type": "default",
-									"disabled": true
+									"type": "default"
 								},
 								{
 									"key": "amount",
@@ -118,26 +82,21 @@
 								},
 								{
 									"key": "is_income",
-									"value": "",
-									"type": "default",
-									"disabled": true
+									"value": "1",
+									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/finances/",
+							"raw": "http://localhost:80/api/finances",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
-								"finances",
-								""
+								"finances"
 							]
 						}
 					},
@@ -146,16 +105,6 @@
 				{
 					"name": "Edit Finance",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "22|NUWxkltWCk33frQvoYhh8DyP8fG8ykLd78k8hefz",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -163,7 +112,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "ahorro2",
+									"value": "Cambio",
 									"type": "default"
 								},
 								{
@@ -185,19 +134,16 @@
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/finances/8",
+							"raw": "http://localhost:80/api/finances/1",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
 								"finances",
-								"8"
+								"1"
 							],
 							"query": [
 								{
@@ -213,16 +159,6 @@
 				{
 					"name": "Delete Finance",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
-									"type": "string"
-								}
-							]
-						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -231,18 +167,16 @@
 								{
 									"key": "name",
 									"value": "Prueba",
-									"type": "default"
+									"type": "default",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/finances/1",
+							"raw": "http://localhost:80/api/finances/1",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
@@ -257,12 +191,32 @@
 				{
 					"name": "Get Income",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:80/api/income",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"income"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Expenses",
+					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "21|WWwuge3cGxhNpWuuArXkBaEZnps8kzJDzEmLKpUv",
+									"value": "69|eu7AP0GIV7RBlQ5F9I9UtHapDPCCKXuRzsaVe9eB",
 									"type": "string"
 								}
 							]
@@ -270,7 +224,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/finances/1/",
+							"raw": "http://192.168.0.210:80/api/expenses",
 							"protocol": "http",
 							"host": [
 								"192",
@@ -281,9 +235,7 @@
 							"port": "80",
 							"path": [
 								"api",
-								"finances",
-								"1",
-								""
+								"expenses"
 							]
 						}
 					},
@@ -302,7 +254,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|8kwfCHJQ9UB6qMxnsvusV49ElT0s1rMdDrEf16uM",
+									"value": "115|SVgRxug0q7lwWsZe39ibUr6RqTc8jJWANccx9zPx",
 									"type": "string"
 								}
 							]
@@ -314,25 +266,21 @@
 							"urlencoded": [
 								{
 									"key": "user",
-									"value": "3",
+									"value": "Cambiado",
 									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/user/1",
+							"raw": "http://localhost:80/api/user",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
-								"user",
-								"1"
+								"user"
 							]
 						}
 					},
@@ -349,7 +297,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
+									"value": "115|SVgRxug0q7lwWsZe39ibUr6RqTc8jJWANccx9zPx",
 									"type": "string"
 								}
 							]
@@ -364,13 +312,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/user/profile",
+							"raw": "http://localhost:80/api/user/profile",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
@@ -390,7 +335,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
+									"value": "115|SVgRxug0q7lwWsZe39ibUr6RqTc8jJWANccx9zPx",
 									"type": "string"
 								}
 							]
@@ -454,26 +399,13 @@
 				{
 					"name": "Create Household",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/households",
+							"raw": "http://localhost:80/api/households",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
@@ -487,26 +419,13 @@
 				{
 					"name": "Get Members",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "2|rwpUJhqtIUWBYLrDL0ASt5YyEIz5NZTapzyOjMTn",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/households/members",
+							"raw": "http://localhost:80/api/households/members",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
@@ -521,26 +440,13 @@
 				{
 					"name": "Get Balance",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|8kwfCHJQ9UB6qMxnsvusV49ElT0s1rMdDrEf16uM",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/households/balance",
+							"raw": "http://localhost:80/api/households/balance",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
@@ -555,32 +461,19 @@
 				{
 					"name": "Delete Household",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "2|ZnAjdPuOqx4oUf51oM3URthbyTlQmlnpgIpomJkX",
-									"type": "string"
-								}
-							]
-						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/households/1",
+							"raw": "http://localhost:80/api/user/leavehousehold",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
-								"households",
-								"1"
+								"user",
+								"leavehousehold"
 							]
 						}
 					},
@@ -594,32 +487,18 @@
 				{
 					"name": "Purchases",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://192.168.0.210:80/api/purchases/",
+							"raw": "http://localhost:80/api/purchases",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
-								"purchases",
-								""
+								"purchases"
 							]
 						}
 					},
@@ -628,16 +507,6 @@
 				{
 					"name": "Create Purchase",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -650,7 +519,7 @@
 								},
 								{
 									"key": "period",
-									"value": "2022-01-15",
+									"value": "2023-07-15",
 									"type": "default"
 								},
 								{
@@ -661,19 +530,15 @@
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/purchases/",
+							"raw": "http://localhost:80/api/purchases",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
-								"purchases",
-								""
+								"purchases"
 							]
 						}
 					},
@@ -685,16 +550,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -718,19 +573,16 @@
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/purchases/6",
+							"raw": "http://localhost:80/api/purchases/1",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
 								"purchases",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -739,16 +591,6 @@
 				{
 					"name": "Edit Purchase",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -756,25 +598,22 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Compraa",
+									"value": "Cambiado",
 									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/purchases/5",
+							"raw": "http://localhost:80/api/purchases/1",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
 								"purchases",
-								"5"
+								"1"
 							],
 							"query": [
 								{
@@ -790,17 +629,7 @@
 				{
 					"name": "Delete Purchase",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
@@ -813,19 +642,16 @@
 							]
 						},
 						"url": {
-							"raw": "http://192.168.0.210:80/api/purchases/5",
+							"raw": "http://localhost:80/api/purchases/1",
 							"protocol": "http",
 							"host": [
-								"192",
-								"168",
-								"0",
-								"210"
+								"localhost"
 							],
 							"port": "80",
 							"path": [
 								"api",
 								"purchases",
-								"5"
+								"1"
 							],
 							"query": [
 								{
@@ -871,13 +697,10 @@
 					]
 				},
 				"url": {
-					"raw": "http://192.168.0.210:80/api/register",
+					"raw": "http://localhost:80/api/register",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"0",
-						"210"
+						"localhost"
 					],
 					"port": "80",
 					"path": [
@@ -925,19 +748,16 @@
 						},
 						{
 							"key": "password",
-							"value": "Prueba",
+							"value": "prueba",
 							"type": "default"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://192.168.0.210:80/api/login",
+					"raw": "http://localhost:80/api/login",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"0",
-						"210"
+						"localhost"
 					],
 					"port": "80",
 					"path": [
@@ -963,26 +783,13 @@
 		{
 			"name": "Logout",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "1|9KoT59CrVaQBad6u8gUz7WjnUERDqnGt6vVMLqV2",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://192.168.0.210:80/api/logout",
+					"raw": "http://localhost:80/api/logout",
 					"protocol": "http",
 					"host": [
-						"192",
-						"168",
-						"0",
-						"210"
+						"localhost"
 					],
 					"port": "80",
 					"path": [
@@ -992,6 +799,36 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "115|SVgRxug0q7lwWsZe39ibUr6RqTc8jJWANccx9zPx",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

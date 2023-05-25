@@ -1,9 +1,16 @@
+//Variables globales
 var url = window.location.href.split("/")[0] + "//" + window.location.href.split("/")[2];
 let modal = null;
 let table = null;
 let form = null;
 var elementoSeleccionado = null;
 
+/**
+ * Función que crea un elemento checkbox
+ * @param {string} id
+ * @param {boolean} checked
+ * @returns {Element}
+ */
 function createCheckbox(id, checked) {
     var input = document.createElement('input');
     input.type = 'checkbox';
@@ -19,15 +26,25 @@ function createCheckbox(id, checked) {
     return input;
 }
 
+/**
+ * Función que edita un elemento
+ * @param {Element} element
+ * @param {string} name
+ * @param {string} value
+ * @returns {void}
+ * @throws {Error}
+ */
 function editElement(element, name, value) {
     var id = element.parentNode.parentNode.getElementsByTagName('td')[0].innerHTML;
     fetchFinance(name + '=' + value, 'PUT', '/api/finances/' + id).then(function (data) {
+        //Muestra un mensaje de éxito
         var row = element.parentNode.parentNode;
         row.classList.add('nuevo');
         setTimeout(function () {
             row.classList.remove('nuevo');
         }, 1000);
     }).catch(function (error) {
+        //Muestra un mensaje de error
         var row = element.parentNode.parentNode;
         row.classList.add('fallo');
         setTimeout(function () {
@@ -43,6 +60,14 @@ function editElement(element, name, value) {
     });
 }
 
+/**
+ * Función que crea eventos a los elementos
+ * @param {string} elementType
+ * @param {string} eventName
+ * @param {function} callback
+ * @returns {void}
+ * @throws {Error}
+ */
 function addEventToElements(elementType, eventName, callback) {
     try {
         var elements = document.getElementsByTagName(elementType);
@@ -55,6 +80,13 @@ function addEventToElements(elementType, eventName, callback) {
     }
 }
 
+/**
+ * Función que crea un elemento input
+ * @param {string} id
+ * @param {string} value
+ * @returns {Element}
+ * @throws {Error}
+ */
 async function fetchFinance(data, method, route) {
     return fetch(url + route, {
         method: method,
@@ -74,29 +106,36 @@ async function fetchFinance(data, method, route) {
     })
 }
 
+/**
+ * Función que añade una fila a la tabla
+ * @param {Object} data
+ * @returns {void}
+ * @throws {Error}
+ * @todo Eliminar el try catch
+ */
 function addRowToTable(data) {
     try {
         //Obtiene el tr del tbody, si tiene un atributo colspan es que no hay datos entonces lo elimina
         if (table.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].getElementsByTagName('td')[0].getAttribute('colspan') != null) {
             table.getElementsByTagName('tbody')[0].getElementsByTagName('tr')[0].remove();
         }
-    } catch (error) {
+    } catch (error) { }
 
-    }
-
+    //Elimina los campos que no se van a mostrar
     var row = table.getElementsByTagName('tbody')[0].insertRow(-1);
     delete data.is_income;
     delete data.period;
     delete data.id_user
     delete data.created_at;
     delete data.updated_at;
-
     if (data.category == null) {
         delete data.category;
     }
+
     let id = data.id;
     delete data.id;
 
+    //Dependiendo de si es un gasto o un ingreso se hace de una manera u otra
     var keys = ['name', 'amount', 'category', 'constant', 'compute_household'];
     if (data['category'] == null) {
         keys = ['name', 'amount', 'constant', 'compute_household'];
@@ -155,6 +194,11 @@ function addRowToTable(data) {
 
 }
 
+/**
+ * Función que atualiza la interfaz
+ * @returns {void}
+ * @throws {Error}
+ */
 function updateUI() {
 
     form.reset();
@@ -190,14 +234,35 @@ function updateUI() {
 
 }
 
+/**
+ * Función que muestra un error en un campo
+ * @param {String} name
+ * @param {Boolean} checked
+ * @returns {Element}
+ * @throws {Error}
+ */
 function showError(name) {
     document.querySelector('[data-name=' + name + ']').style.display = "block";
 }
 
+/**
+ * Función que oculta un error en un campo
+ * @param {String} name
+ * @returns {Element}
+ * @throws {Error}
+ * @returns {void}
+ */
 function hideError(name) {
     document.querySelector('[data-name=' + name + ']').style.display = "none";
 }
 
+/**
+ * Función que lanza los errores de la API
+ * @param {Object} data
+ * @returns {void}
+ * @throws {Error}
+ * @returns {void}
+ */
 function throwErrorsUI(data) {
     if (data.errors) {
         for (var i = 0; i < form.length; i++) {
@@ -234,17 +299,20 @@ function throwErrorsUI(data) {
     }
 }
 
+/**
+ * Función que crea los event listeners para borrar
+ * @returns {void}
+ * @throws {Error}
+ */
 function createEventListeners() {
-    // A todos los tr's del tbody les añade un evento para que al hacer click se marquen con la clase table-selected y se guarde el id en un var
     document.querySelectorAll('tbody tr').forEach(function (tr) {
         //Si el tr tiene un colspan de 5 o 6 no se le añade el evento
         try {
             if (tr.cells[0].colSpan == 5 || tr.cells[0].colSpan == 6) {
                 return;
             }
-        } catch (error) {
-        }
-        //Si el tr no tiene un evento click
+        } catch (error) { }
+
         if (!tr.onclick) {
             tr.addEventListener('click', function (e) {
                 if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TD' && e.target.colSpan == 5 || e.target.nodeName == 'TD' && e.target.colSpan == 6) {
@@ -277,6 +345,7 @@ document.addEventListener('keydown', function (e) {
 
 
 window.addEventListener('load', function () {
+    //Obtiene los elementos del DOM
     table = document.getElementsByTagName('table')[0];
     form = document.getElementsByTagName('form')[0];
     modal = document.getElementsByClassName('modal')[0];
@@ -315,7 +384,7 @@ window.addEventListener('load', function () {
         }
     }
 
-    // Se encarga de añadir obtener los datos del formulario y enviarlos
+    // Se encarga de obtener los datos del formulario y enviarlos
     if (enviar && enviar.textContent == 'Añadir') {
         enviar.addEventListener('click', async function (e) {
             e.preventDefault();
@@ -372,7 +441,7 @@ window.addEventListener('load', function () {
                                 span1.classList.add('titulo');
                                 let period = new Date(data.period);
                                 const today = new Date();
-                                span1.innerHTML = today.getFullYear() + "-" + (today.getMonth()+1) + " - " +period.getFullYear() + '-' + (period.getMonth() + 1)
+                                span1.innerHTML = today.getFullYear() + "-" + (today.getMonth() + 1) + " - " + period.getFullYear() + '-' + (period.getMonth() + 1)
                                 p1.appendChild(span1);
 
                                 const p2 = document.createElement('p');
@@ -390,7 +459,7 @@ window.addEventListener('load', function () {
                                 span3.innerHTML = 'Total: ';
                                 const span4 = document.createElement('span');
                                 //Data amount pero en formato decimal 2
-                                let amount = Math.round( parseFloat(data.amount) * 100) / 100;
+                                let amount = Math.round(parseFloat(data.amount) * 100) / 100;
                                 span4.innerHTML = `0.00 / ${amount.toFixed(2)}€`;
                                 const span5 = document.createElement('span');
                                 span5.classList.add('titulo');
@@ -415,9 +484,9 @@ window.addEventListener('load', function () {
                                     fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
                                 });
 
-/*                                 const button2 = document.createElement('button');
-                                button2.classList.add('modificar');
-                                button2.innerHTML = 'Modificar'; */
+                                /*                                 const button2 = document.createElement('button');
+                                                                button2.classList.add('modificar');
+                                                                button2.innerHTML = 'Modificar'; */
 
                                 div2.append(button1);
                                 div.append(img, p1, p2, br, p3, div2);
@@ -454,9 +523,9 @@ window.addEventListener('load', function () {
 
     });
 
+    //Si se hace click en el boton de borrado, borra el elemento seleccionado
     if (document.querySelector('#borrar')) {
         createEventListeners();
-        //Si se hace click en el boton de borrar, borra el elemento seleccionado
         document.querySelector('#borrar').addEventListener('click', function (e) {
             e.preventDefault();
             var id = elementoSeleccionado.firstElementChild.innerHTML;
@@ -491,26 +560,25 @@ window.addEventListener('load', function () {
             });
 
             //Si la tabla tiene de id tabla-gastos entonces se modifica dineroTotal y dineroDisponible
-/*             if (document.querySelector('#tabla-gastos')) {
-                var total = document.querySelector('#dineroTotal');
-                var disponible = document.querySelector('#dineroDisponible');
-                total.innerHTML = `${parseFloat(total.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}`;
-                disponible.innerHTML = `${parseFloat(disponible.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}€`;
-                //Si es positivo activa el botón de id #añadirAhorro
-                if (parseFloat(disponible.innerHTML) > 0) {
-                    document.querySelector('#añadirAhorro').disabled = false;
-                    document.querySelector('#añadirAhorro').classList.remove('disabled');
-                }
-                //Si por el contrario es negativo, desactiva el botón de id #añadirAhorro
-                else {
-                    document.querySelector('#añadirAhorro').disabled = true;
-                    document.querySelector('#añadirAhorro').classList.add('disabled');
-                }
-            } */
+            /*             if (document.querySelector('#tabla-gastos')) {
+                            var total = document.querySelector('#dineroTotal');
+                            var disponible = document.querySelector('#dineroDisponible');
+                            total.innerHTML = `${parseFloat(total.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}`;
+                            disponible.innerHTML = `${parseFloat(disponible.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}€`;
+                            //Si es positivo activa el botón de id #añadirAhorro
+                            if (parseFloat(disponible.innerHTML) > 0) {
+                                document.querySelector('#añadirAhorro').disabled = false;
+                                document.querySelector('#añadirAhorro').classList.remove('disabled');
+                            }
+                            //Si por el contrario es negativo, desactiva el botón de id #añadirAhorro
+                            else {
+                                document.querySelector('#añadirAhorro').disabled = true;
+                                document.querySelector('#añadirAhorro').classList.add('disabled');
+                            }
+                        } */
 
         });
     }
-
 });
 
 

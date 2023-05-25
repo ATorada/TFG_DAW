@@ -75,7 +75,6 @@ body::-webkit-scrollbar {
     animation: all 0.3s ease-in-out;
 }
 
-
 /* ~~~~ Nav superior ~~~~ */
 
 .logoImg {
@@ -154,11 +153,10 @@ body::-webkit-scrollbar {
     ul.nav li.right,
     ul.nav li.left,
     ul.nav li,
-    ul.nav li:first-child a{
+    ul.nav li:first-child a {
         float: none !important;
         margin: auto;
         margin-top: 1rem;
         width: 100%;
     }
-
 }

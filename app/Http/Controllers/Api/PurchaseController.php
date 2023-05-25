@@ -10,19 +10,19 @@ use Carbon\Carbon;
 class PurchaseController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Se encarga de crear una purchase
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        // Lista todas las purchases del usuario
+
         $purchases = Purchase::where('id_user', auth()->user()->id)->get();
-        //Por cada purchase añade compragrande['cost'] que es lo que tiene que pagar que se hace en base a los meses de created_at y period
+
         foreach ($purchases as $purchase) {
+            //Calcula el coste mensual
             $cost = 0;
-            //Los crea en formato datetime
             $period =  Carbon::parse(date('Y-m-d', strtotime($purchase['period'])));
             $created_at = Carbon::parse(date('Y-m-1', strtotime($purchase['created_at'])));
-            //La diferencia de meses entre periodo de la compra y el periodo de creacion de la compra
             $months = $period->diffInMonths($created_at);
             if ($months == 0) {
                 $cost = $purchase['amount'];
@@ -30,7 +30,8 @@ class PurchaseController extends Controller
                 $cost = $purchase['amount'] / $months;
             }
             $purchase['cost'] = $cost;
-            //Se crea $purchase['cost'] que es lo ya tiene pagado en base de cuando se creo la purchase y el periodo actual
+
+            //Calcula lo que ya ha pagado
             $cost = 0;
             $period = Carbon::parse(date('Y-m-d'));
             $months = $period->diffInMonths($created_at);
@@ -45,7 +46,9 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Se encarga de crear una purchase
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -71,14 +74,16 @@ class PurchaseController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $request->file('image')->storeAs('public/purchases/purchase_'. $purchase->id.'.png');
+            $request->file('image')->storeAs('public/purchases/purchase_' . $purchase->id . '.png');
         }
 
         return response()->json($purchase, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Se encarga de eliminar una purchase
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id)
     {
@@ -91,7 +96,10 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Se encarga de actualizar una purchase
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, string $id)
     {
@@ -116,12 +124,14 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Se encarga de eliminar una purchase
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id)
     {
-        //Elimina una purchase
         $purchase = Purchase::where('id_user', auth()->user()->id)->where('id', $id)->first();
+
         //Si existe su imagen la elimina
         if (file_exists(storage_path('app/public/purchases/purchase_' . $id . '.png'))) {
             unlink(storage_path('app/public/purchases/purchase_' . $id . '.png'));

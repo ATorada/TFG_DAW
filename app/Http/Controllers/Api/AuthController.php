@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * Se encarga de registrar un usuario
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function register(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'user' => 'required|max:15|unique:users',
             'email' => 'required|email|unique:users',
@@ -41,16 +46,19 @@ class AuthController extends Controller
             'token' => $token,
             'user' => $user
         ], Response::HTTP_CREATED)->withCookie('cookie_token', $token, 60);
-
     }
 
-
-
+    /**
+     * Se encarga de loguear un usuario
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function login(Request $request)
     {
         try {
             $credentials = $request->validate([
-                'email' => 'required','email',
+                'email' => 'required', 'email',
                 'password' => 'required'
             ]);
 
@@ -69,6 +77,11 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Se encarga de cerrar la sesión de un usuario
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         $cookie = cookie('cookie_token', null, -1);

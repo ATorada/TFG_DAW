@@ -1,12 +1,10 @@
-window.addEventListener('load', function() {
-//Obtiene todos los botones con la clase borrar y les añade un evento click en el que hacen un fetch a la ruta api/delete
+window.addEventListener('load', function () {
+    //Obtiene todos los botones con la clase borrar y les añade un evento click
     var btnsBorrar = document.getElementsByClassName('borrar');
     for (var i = 0; i < btnsBorrar.length; i++) {
         btnsBorrar[i].addEventListener('click', function (e) {
             e.preventDefault();
-            //Obtiene el padre de su padre
             var id = this.parentNode.parentNode.id;
-
             fetchFinance(null, 'DELETE', '/api/purchases/' + id).then(function (data) {
                 if (data.status == 204) {
                     document.getElementById(id).remove();
@@ -14,7 +12,8 @@ window.addEventListener('load', function() {
             });
         });
     }
-    //Obtiene todos los botones con la clase editar y les añade un evento click en el que hacen un fetch a la ruta api/edit
+
+    //Obtiene todos los botones con la clase editar y les añade un evento click
     var btnsEditar = document.getElementsByClassName('modificar');
     for (var i = 0; i < btnsEditar.length; i++) {
         btnsEditar[i].addEventListener('click', function (e) {

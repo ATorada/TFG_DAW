@@ -919,7 +919,6 @@ table select#tipo option {
     margin: auto;
 }
 
-
 .modal form button::before {
     background: linear-gradient(
         135deg,

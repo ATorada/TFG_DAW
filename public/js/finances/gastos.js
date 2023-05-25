@@ -1,9 +1,17 @@
+/**
+ * Función que calcula el ahorro en función del valor del slider
+ * @returns {Number} ahorro
+ */
 function calcularAhorro() {
     var ahorro = document.getElementById('ahorroSlider').value * (parseFloat(dineroTotal.textContent) / 100);
     ahorro = ahorro.toFixed(2);
     return ahorro;
 }
 
+/**
+ * Función que activa el formulario de añadir ahorro
+ * @returns {void}
+ */
 function activateCreateAhorro() {
     ahorroActual.innerHTML = 0;
     dineroDisponible.innerHTML = dineroTotal.textContent;
@@ -15,6 +23,11 @@ function activateCreateAhorro() {
     ahorroSlider.nextElementSibling.value = 0 + '%';
 }
 
+/**
+ * Función que activa el formulario de editar ahorro
+ * @param {Object} data
+ * @returns {void}
+ */
 function activateEditAhorro(data) {
     añadirAhorro.style.display = "none";
     editarAhorro.style.display = "block";
@@ -65,6 +78,7 @@ window.addEventListener('load', function () {
         });
     }
 
+    //Al hacer click en añadir ahorro, se crea el ahorro
     if (añadirAhorro) {
         añadirAhorro.addEventListener('click', function (e) {
             e.preventDefault();
@@ -77,6 +91,7 @@ window.addEventListener('load', function () {
         });
     }
 
+    //Al hacer click en editar ahorro, se edita el ahorro
     if (editarAhorro) {
         editarAhorro.addEventListener('click', function (e) {
             e.preventDefault();
@@ -95,6 +110,7 @@ window.addEventListener('load', function () {
         });
     }
 
+    //Al hacer click en borrar ahorro, se borra el ahorro
     if (borrarAhorro) {
         borrarAhorro.addEventListener('click', function (e) {
             e.preventDefault();

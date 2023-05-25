@@ -9,18 +9,23 @@ use App\Models\Finance;
 class FinanceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Se encarga de devolver todos los gastos e ingresos de un usuario
      */
-    public function index(){
+    public function index()
+    {
         $user = auth()->user();
         $finances = Finance::where('id_user', $user->id)->get();
         return response()->json($finances, 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Se encarga de crear un gasto o ingreso
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'name' => 'required|string|max:50',
             'category' => 'nullable|string|in:otros,alimentacion,vivienda,transporte,comunicaciones,ocio,salud,educacion,ahorro',
@@ -66,9 +71,13 @@ class FinanceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Se encarga de devolver un gasto o ingreso
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function show(string $id){
+    public function show(string $id)
+    {
         $user = auth()->user();
         $finance = Finance::where('id_user', $user->id)->where('id', $id)->first();
         if ($finance) {
@@ -79,9 +88,14 @@ class FinanceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Se encarga de actualizar un gasto o ingreso
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $validatedData = $request->validate([
             'name' => 'sometimes|string|max:50',
             'period' => 'sometimes|date',
@@ -103,7 +117,7 @@ class FinanceController extends Controller
         try {
             $finance->update($validatedData);
         } catch (\Illuminate\Database\QueryException $e) {
-
+            //Controla el tipo de error
             $error = $e->errorInfo[1];
             if ($error == 1062) {
                 return response()->json(['error' => 'A finance with the same name and period already exists.'], 400);
@@ -125,9 +139,13 @@ class FinanceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Se encarga de eliminar un gasto o ingreso
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function destroy(string $id){
+    public function destroy(string $id)
+    {
         $user = auth()->user();
         $finance = Finance::where('id_user', $user->id)->where('id', $id)->first();
         if (!$finance) {
@@ -142,7 +160,12 @@ class FinanceController extends Controller
         return response()->json(null, 204);
     }
 
-    public function getIncome(){
+    /**
+     * Se encarga de devolver los gastos o ingresos de un usuario
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getIncome()
+    {
         $user = auth()->user();
         $result = [];
         $total = 0;
@@ -155,7 +178,12 @@ class FinanceController extends Controller
         return response()->json($result, 200);
     }
 
-    public function getExpenses(){
+    /**
+     * Se encarga de devolver los gastos o ingresos de un usuario
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getExpenses()
+    {
         $user = auth()->user();
         $result = [];
         $finances = Finance::where('id_user', $user->id)->where('is_income', 0)->get();
