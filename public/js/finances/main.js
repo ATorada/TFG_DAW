@@ -28,9 +28,18 @@ function editElement(element, name, value) {
             row.classList.remove('nuevo');
         }, 1000);
     }).catch(function (error) {
-        error.then(function (data) {
-            console.log(data);
-        });
+        var row = element.parentNode.parentNode;
+        row.classList.add('fallo');
+        setTimeout(function () {
+            row.classList.remove('fallo');
+        }, 1000);
+        try {
+            error.then(function (data) {
+                console.log(data);
+            });
+        } catch (e) {
+            console.log(error);
+        }
     });
 }
 

@@ -1005,6 +1005,22 @@ table select#tipo option {
     }
 }
 
+.fallo {
+    animation: parpadeoError 1s infinite !important;
+}
+
+@keyframes parpadeoError {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #ffb3b3;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
 .disabled,
 .disabled:hover,
 .disabled:focus,
