@@ -155,11 +155,11 @@ function addRowToTable(data) {
             });
 
             var options = ['alimentacion', 'vivienda', 'transporte', 'ocio', 'comunicaciones', 'salud', 'educacion', 'otros'];
-            if(json.Idioma == 'es'){
+            if (json.Idioma == 'es') {
                 var optionsNames = ['Alimentación', 'Vivienda', 'Transporte', 'Ocio', 'Comunicaciones', 'Salud', 'Educación', 'Otros'];
-            }else if(json.Idioma == 'en'){
+            } else if (json.Idioma == 'en') {
                 var optionsNames = ['Food', 'Housing', 'Transport', 'Leisure', 'Communications', 'Health', 'Education', 'Others'];
-            } else if(json.Idioma == 'de'){
+            } else if (json.Idioma == 'de') {
                 var optionsNames = ['Lebensmittel', 'Wohnung', 'Transport', 'Freizeit', 'Kommunikation', 'Gesundheit', 'Bildung', 'Andere'];
             }
             for (var j = 0; j < options.length; j++) {
@@ -370,7 +370,7 @@ window.addEventListener('load', function () {
             "Gastos": "No hay gastos",
             "Borrar": "Borrar",
         };
-    }else if (titulo == "Income" || titulo == "Expenses" || titulo == "Purchases") {
+    } else if (titulo == "Income" || titulo == "Expenses" || titulo == "Purchases") {
         json = {
             "Idioma": "en",
             "Total": "Total:",
@@ -379,7 +379,7 @@ window.addEventListener('load', function () {
             "Gastos": "No expenses",
             "Borrar": "Delete",
         };
-    } else if (titulo == "Einkommen" || titulo == "Ausgaben" || titulo == "Einkäufe") {
+    } else if (titulo == "Einkommen" || titulo == "Ausgaben" || titulo == "Großeinkäufe") {
         json = {
             "Idioma": "de",
             "Total": "Gesamt:",
@@ -389,7 +389,6 @@ window.addEventListener('load', function () {
             "Borrar": "Löschen",
         };
     }
-
     // Añadir evento a los inputs
     addEventToElements('input', 'click', function (e) {
         try {
@@ -422,123 +421,126 @@ window.addEventListener('load', function () {
     }
 
     // Se encarga de obtener los datos del formulario y enviarlos
-    if (enviar && enviar.textContent == 'Añadir' || enviar.textContent == 'Add' || enviar.textContent == 'Hinzufügen') {
-        enviar.addEventListener('click', async function (e) {
-            e.preventDefault();
-            const data = new URLSearchParams(new FormData(form));
-            if (!form.image) {
-                data.delete('image');
-            } else {
-                data.set('image', form.image.files[0]);
-            }
+    try {
+        if (enviar && enviar.textContent == 'Añadir' || enviar.textContent == 'Add' || enviar.textContent == 'Hinzufügen') {
+            enviar.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const data = new URLSearchParams(new FormData(form));
+                if (!form.image) {
+                    data.delete('image');
+                } else {
+                    data.set('image', form.image.files[0]);
+                }
 
-            //Si data tiene period, es una compra grande
-            if (!data.has('period')) {
-                await fetchFinance(data, 'POST', '/api/finances')
-                    .then(function (data) {
-                        addRowToTable(data);
-                        updateUI();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        error.then(function (data) {
-                            throwErrorsUI(data);
-                        });
-                    });
-            } else {
-                const data = new FormData(form);
-                fetch('/api/purchases', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    },
-                    body: data
-                })
-                    .then(function (data) {
-                        if (data.ok) {
-                            data.json().then(function (data) {
-                                const div = document.createElement('div');
-                                div.classList.add('compra-grande');
-
-                                const img = document.createElement('img');
-                                //Si el form tenía una imagen, la añade, sino, pone una por defecto
-
-                                if (!form.image.value) {
-                                    img.src = '../img/comprasgrandes/compragrande_placeholder.png';
-                                    img.alt = '';
-                                } else {
-                                    img.src = 'http://81.203.93.98/storage/purchases/purchase_' + data.id + '.png';
-                                }
-
-                                const p1 = document.createElement('p');
-                                const span1 = document.createElement('span');
-                                span1.classList.add('titulo');
-                                let period = new Date(data.period);
-                                const today = new Date();
-                                span1.innerHTML = today.getFullYear() + "-" + (today.getMonth() + 1) + " - " + period.getFullYear() + '-' + (period.getMonth() + 1)
-                                p1.appendChild(span1);
-
-                                const p2 = document.createElement('p');
-                                const span2 = document.createElement('span');
-                                span2.classList.add('titulo');
-                                span2.innerHTML = data.name;
-                                span2.style.textDecoration = 'underline';
-                                p2.appendChild(span2);
-
-                                const br = document.createElement('br');
-
-                                const p3 = document.createElement('p');
-                                const span3 = document.createElement('span');
-                                span3.classList.add('titulo');
-                                span3.innerHTML = json.Total + ' ';
-                                const span4 = document.createElement('span');
-                                //Data amount pero en formato decimal 2
-                                let amount = Math.round(parseFloat(data.amount) * 100) / 100;
-                                span4.innerHTML = `0.00 / ${amount.toFixed(2)}€`;
-                                const span5 = document.createElement('span');
-                                span5.classList.add('titulo');
-                                span5.innerHTML = '<br>'+json.DineroMes+': ';
-                                const span6 = document.createElement('span');
-                                //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
-                                const date = new Date();
-                                const date2 = new Date(data.period);
-                                const diff = date2.getMonth() - date.getMonth();
-                                span6.innerHTML = `${(amount / diff).toFixed(2)}€`;
-                                p3.append(span3, span4, span5, span6);
-
-                                const div2 = document.createElement('div');
-                                div2.classList.add('botones');
-
-                                const button1 = document.createElement('button');
-                                button1.classList.add('borrar');
-                                button1.innerHTML = json.Borrar;
-                                button1.addEventListener('click', function (e) {
-                                    e.preventDefault();
-                                    div.remove();
-                                    fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
-                                });
-
-                                div2.append(button1);
-                                div.append(img, p1, p2, br, p3, div2);
-                                document.querySelector('.main-content').appendChild(div);
-
-                                form.reset();
-                                modal.style.display = "none";
-                                document.querySelector('#limite').style.display = "none";
+                //Si data tiene period, es una compra grande
+                if (!data.has('period')) {
+                    await fetchFinance(data, 'POST', '/api/finances')
+                        .then(function (data) {
+                            addRowToTable(data);
+                            updateUI();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            error.then(function (data) {
+                                throwErrorsUI(data);
                             });
-                        } else {
-                            throw data.json();
-                        }
-                    })
-                    .catch(function (error) {
-                        error.then(function (data) {
-                            throwErrorsUI(data);
                         });
-                    });
-            }
-        });
+                } else {
+                    const data = new FormData(form);
+                    fetch('/api/purchases', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        },
+                        body: data
+                    })
+                        .then(function (data) {
+                            if (data.ok) {
+                                data.json().then(function (data) {
+                                    const div = document.createElement('div');
+                                    div.classList.add('compra-grande');
+
+                                    const img = document.createElement('img');
+                                    //Si el form tenía una imagen, la añade, sino, pone una por defecto
+
+                                    if (!form.image.value) {
+                                        img.src = '../img/comprasgrandes/compragrande_placeholder.png';
+                                        img.alt = '';
+                                    } else {
+                                        img.src = 'http://81.203.93.98/storage/purchases/purchase_' + data.id + '.png';
+                                    }
+
+                                    const p1 = document.createElement('p');
+                                    const span1 = document.createElement('span');
+                                    span1.classList.add('titulo');
+                                    let period = new Date(data.period);
+                                    const today = new Date();
+                                    span1.innerHTML = today.getFullYear() + "-" + (today.getMonth() + 1) + " - " + period.getFullYear() + '-' + (period.getMonth() + 1)
+                                    p1.appendChild(span1);
+
+                                    const p2 = document.createElement('p');
+                                    const span2 = document.createElement('span');
+                                    span2.classList.add('titulo');
+                                    span2.innerHTML = data.name;
+                                    span2.style.textDecoration = 'underline';
+                                    p2.appendChild(span2);
+
+                                    const br = document.createElement('br');
+
+                                    const p3 = document.createElement('p');
+                                    const span3 = document.createElement('span');
+                                    span3.classList.add('titulo');
+                                    span3.innerHTML = json.Total + ' ';
+                                    const span4 = document.createElement('span');
+                                    //Data amount pero en formato decimal 2
+                                    let amount = Math.round(parseFloat(data.amount) * 100) / 100;
+                                    span4.innerHTML = `0.00 / ${amount.toFixed(2)}€`;
+                                    const span5 = document.createElement('span');
+                                    span5.classList.add('titulo');
+                                    span5.innerHTML = '<br>' + json.DineroMes + ': ';
+                                    const span6 = document.createElement('span');
+                                    //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
+                                    const date = new Date();
+                                    const date2 = new Date(data.period);
+                                    const diff = date2.getMonth() - date.getMonth();
+                                    span6.innerHTML = `${(amount / diff).toFixed(2)}€`;
+                                    p3.append(span3, span4, span5, span6);
+
+                                    const div2 = document.createElement('div');
+                                    div2.classList.add('botones');
+
+                                    const button1 = document.createElement('button');
+                                    button1.classList.add('borrar');
+                                    button1.innerHTML = json.Borrar;
+                                    button1.addEventListener('click', function (e) {
+                                        e.preventDefault();
+                                        div.remove();
+                                        fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
+                                    });
+
+                                    div2.append(button1);
+                                    div.append(img, p1, p2, br, p3, div2);
+                                    document.querySelector('.main-content').appendChild(div);
+
+                                    form.reset();
+                                    modal.style.display = "none";
+                                    document.querySelector('#limite').style.display = "none";
+                                });
+                            } else {
+                                throw data.json();
+                            }
+                        })
+                        .catch(function (error) {
+                            error.then(function (data) {
+                                throwErrorsUI(data);
+                            });
+                        });
+                }
+            });
+        }
     }
+    catch (error) {}
 
     // Se encarga de ponerle al boton de salir que borre el token del localStorage y las cookies
     document.querySelector('.salir a').addEventListener('click', function (e) {

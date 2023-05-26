@@ -41,7 +41,6 @@ window.addEventListener('load', function () {
                 if (response.status == 200) {
                     document.getElementById('modal').style.display = 'none';
                     response.json().then(function (result) {
-                        console.log(result.email);
                         document.getElementById('correo').textContent = result.email;
                         document.getElementById('usuario').textContent = result.user;
                         form.reset();
