@@ -6,8 +6,8 @@
 
     <div id="error">
         <h1>404</h1>
-        <h2>@lang('error.404')</h2>
-        <p>@lang('error.404_2')</p>
+        <h2>@lang('errors.404')</h2>
+        <p>@lang('errors.404_2')</p>
     </div>
 
 @endsection
