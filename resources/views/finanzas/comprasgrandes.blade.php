@@ -1,38 +1,38 @@
 @extends('layout')
 
-@section('title', 'Compras grandes')
+@section('title', __('sidenav.purchases'))
 
 @section('content')
 
-    <p class="toast">Compra añadida correctamente</p>
+    <p class="toast">@lang('finances.purchaseAdded')</p>
     <div class="modal">
         <div class="modal-content">
             <span class="close">x</span>
             <form action="" enctype="multipart/form-data">
-                <h1>Añadir compra</h1>
-                <p class="error" id="limite">No puedes añadir más de 5 compras grandes</p>
-                <p class="error" data-name="name">El campo concepto es obligatorio y debe ser menor de 50 caracteres</p>
-                <input type="text" name="name" id="name" placeholder="Concepto">
-                <p class="error" data-name="amount">El campo cantidad es obligatorio y debe ser un número positivo menor de 100000</p>
-                <input type="number" name="amount" id="amount" placeholder="Cantidad">
-                <p class="error" data-name="period">El campo periodo es obligatorio y debe ser una fecha posterior a este mes</p>
-                <input type="date" name="period" id="period" placeholder="Periodo">
-                <p class="error" data-name="image">El campo debe ser un archivo de tipo imagen png.</p>
+                <h1>@lang('finances.addPurchase')</h1>
+                <p class="error" id="limite">@lang('finances.noMoreThan')</p>
+                <p class="error" data-name="name">@lang('finances.nameField')</p>
+                <input type="text" name="name" id="name" placeholder="@lang('finances.concept')">
+                <p class="error" data-name="amount">@lang('finances.amountField')</p>
+                <input type="number" name="amount" id="amount" placeholder="@lang('finances.amount')">
+                <p class="error" data-name="period">@lang('finances.periodField')</p>
+                <input type="date" name="period" id="period" placeholder="@lang('finances.period')">
+                <p class="error" data-name="image">@lang('finances.imageField')</p>
                 <input type="file" name="image" id="image" accept="image/*">
-                <button class="añadir" type="submit">Añadir</button>
+                <button class="añadir" type="submit">@lang('finances.add')</button>
             </form>
         </div>
     </div>
 
     <div id="titulo">
-        <h1>Compra grande</h1>
+        <h1>@lang('sidenav.purchases')</h1>
     </div>
     <div class="main-content">
 
         <div id="añadir-compra">
             <br>
             <button class="añadir" id="añadir">
-                <p>Añadir</p>
+                <p>@lang('finances.addPurchase')</p>
             </button>
         </div>
 

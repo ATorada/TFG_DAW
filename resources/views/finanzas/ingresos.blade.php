@@ -1,34 +1,34 @@
 @extends('layout')
 
-@section('title', 'Ingresos')
+@section('title', __('finances.income'))
 
 @section('content')
-    <p class="toast">Ingreso añadido correctamente</p>
+    <p class="toast">@lang('finances.incomeAdded')</p>
     <div class="modal">
         <div class="modal-content">
             <span class="close">x</span>
             <form action="">
-                <h1>Añadir finanza</h1>
-                <p class="error" data-name="name">El campo concepto es obligatorio, no debe repetirse y debe ser menor de 50 caracteres</p>
-                <input type="text" name="name" id="name" placeholder="Concepto">
-                <p class="error" data-name="amount">El campo cantidad es obligatorio y debe ser un número positivo menor de 100000</p>
-                <input type="number" name="amount" id="amount" placeholder="Cantidad">
+                <h1>@lang('finances.addFinance')</h1>
+                <p class="error" data-name="name">@lang('finances.nameField')</p>
+                <input type="text" name="name" id="name" placeholder="@lang('finances.concept')">
+                <p class="error" data-name="amount">@lang('finances.amountField')</p>
+                <input type="number" name="amount" id="amount" placeholder="@lang('finances.amount')">
                 <div class="checkbox-container">
                     <input type="checkbox" name="constant" id="constant" value="1">
-                    <label for="constant">Recurrente</label>
+                    <label for="constant">@lang('finances.constant')</label>
                 </div>
                 <div class="checkbox-container">
                     <input type="checkbox" name="compute_household" id="compute_household" value="1">
-                    <label for="compute_household">Unidad Familiar</label>
+                    <label for="compute_household">@lang('finances.household')</label>
                 </div>
                 <input type="hidden" name="is_income" id="is_income" value="1">
-                <button class="añadir" type="submit">Añadir</button>
+                <button class="añadir" type="submit">@lang('finances.add')</button>
             </form>
         </div>
     </div>
 
     <div id="titulo">
-        <h1>Ingresos</h1>
+        <h1>@lang('finances.income')</h1>
     </div>
 
     <div class="main-content">
@@ -38,10 +38,10 @@
                 <thead>
                     <tr>
                         <th hidden>Id</th>
-                        <th>Concepto</th>
-                        <th>Cantidad</th>
-                        <th>Recurrente</th>
-                        <th>Unidad Familiar</th>
+                        <th>@lang('finances.concept')</th>
+                        <th>@lang('finances.amount')</th>
+                        <th>@lang('finances.constant')</th>
+                        <th>@lang('finances.household')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,17 +63,17 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="5"><b>No hay ingresos</b></td>
+                            <td colspan="5"><b>@lang('finances.noIncome')</b></td>
                         </tr>
                     @endif
                 </tbody>
             </table>
         </div>
         <button class="borrar disabled" disabled id="borrar">
-            <b>Borrar</b>
+            <b>@lang('finances.delete')</b>
         </button>
         <button class="añadir" id="añadir">
-            <b>Añadir</b>
+            <b>@lang('finances.addFinance')</b>
         </button>
     </div>
 @endsection

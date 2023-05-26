@@ -6,8 +6,8 @@
 
     <div id="error">
         <h1>500</h1>
-        <h2>Algo ha ocurrido con el servidor</h2>
-        <p>Por favor, sea paciente</p>
+        <h2>@lang('error.500')</h2>
+        <p>@lang('error.500_2')</p>
     </div>
 
 @endsection

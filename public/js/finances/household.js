@@ -27,6 +27,11 @@ window.addEventListener('load', function () {
                 document.getElementById('expenses').innerHTML = data.expenses;
             }
             );
+            //Añade € a los ingresos y gastos despues de 5 segundos
+            setTimeout(function () {
+                document.getElementById('income').innerHTML = document.getElementById('income').innerHTML + " €";
+                document.getElementById('expenses').innerHTML = document.getElementById('expenses').innerHTML + " €";
+            }, 1000);
         });
     }
 

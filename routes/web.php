@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cookie;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,20 +17,26 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('locale/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+})->name('locale');
+
 Route::get('/', function () {
     return view('index');
-})->name('index');
+})->name('index')->middleware('language');
 
 Route::get('login', function () {
     return view('auth.login');
-})->name('loginForm');
+})->name('loginForm')->middleware('language');
 
 Route::get('register', function () {
     return view('auth.register');
-})->name('registerForm');
+})->name('registerForm')->middleware('language');
 
 Route::middleware('cookie')->prefix('/finances')->group(function () {
 
+    Route::middleware('language')->group(function () {
         Route::get('/',[Web\FinanceController::class, 'index'])->name('finance.index');
 
         Route::resource('purchases', Web\PurchaseController::class)->only(['index']);
@@ -44,6 +52,7 @@ Route::middleware('cookie')->prefix('/finances')->group(function () {
         Route::get('/account', [Web\UserController::class, 'account'])->name('account');
 
         Route::get('/logout', [Web\UserController::class, 'logout'])->name('logout');
+    });
 });
 
 

@@ -6,8 +6,8 @@
 
     <div id="error">
         <h1>404</h1>
-        <h2>La página que buscas no existe</h2>
-        <p>Por favor, comprueba que la URL es correcta</p>
+        <h2>@lang('error.404')</h2>
+        <p>@lang('error.404_2')</p>
     </div>
 
 @endsection

@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Cuenta')
+@section('title', __('sidenav.account'))
 
 @section('content')
 
@@ -11,28 +11,28 @@
             </div>
             <div class="modal-body">
                 <form action="" {{-- enctype="multipart/form-data" --}}>
-                    <h1>Editar usuario</h1>
-                    <p class="error" data-name="user">Ese nombre no está disponible</p>
-                    <label for="user">Nombre</label>
+                    <h1>@lang('finances.editUser')</h1>
+                    <p class="error" data-name="user">@lang('finances.nameField')</p>
+                    <label for="user">@lang('finances.name')</label>
                     <input type="text" name="user" id="user">
-                    <p class="error" data-name="email">Ese correo no está disponible</p>
-                    <label for="email">Correo</label>
+                    <p class="error" data-name="email">@lang('finances.emailField')</p>
+                    <label for="email">@lang('finances.email')</label>
                     <input type="text" name="email" id="email">
-                    <p class="error" data-name="password">Las contraseñas deben coincidir</p>
-                    <label for="password">Contraseña</label>
+                    <p class="error" data-name="password">@lang('finances.passwordField')</p>
+                    <label for="password">@lang('finances.password')</label>
                     <input type="password" name="password" id="password">
-                    <label for="password_confirmation">Confirmar contraseña</label>
+                    <label for="password_confirmation">@lang('finances.confirmPassword')</label>
                     <input type="password" name="password_confirmation" id="password_confirmation">
-                    <p class="error" data-name="image">El archivo debe ser una imagen en formato png</p>
+                    <p class="error" data-name="image">@lang('finances.imageField')</p>
 {{--                     <label for="image">Foto de perfil</label>
                     <input type="file" name="image" id="image"> --}}
-                    <button type="submit" class="modificar" id="editar">Editar</button>
+                    <button type="submit" class="modificar" id="editar">@lang('finances.edit')
                 </form>
             </div>
         </div>
     </div>
     <div id="titulo">
-        <h1>Cuenta</h1>
+        <h1>@lang('sidenav.account')</h1>
     </div>
     <div class="main-content">
         {{-- Permite cambiar el nombre, el correo, la contraseña y la foto de perfil --}}
@@ -47,12 +47,12 @@
                 <img id="imagen" src="{{ $imageExists ? asset($imagePath) : '../img/account_placeholder.png' }}">
                 </div> --}}
                 <div class="account-info-data">
-                    <h2>Nombre</h2>
+                    <h2>@lang('finances.name')</h2>
                     <p id="usuario"> {{ $data['user'] ?? '' }} </p>
-                    <h2>Correo</h2>
+                    <h2>@lang('finances.email')</h2>
                     <p id="correo"> {{ $data['email'] ?? '' }} </p>
                 </div>
-                    <button class="modificar" id="editarModal">Editar</button>
+                    <button class="modificar" id="editarModal">@lang('finances.edit')</button>
                 <br>
             </div>
         </div>

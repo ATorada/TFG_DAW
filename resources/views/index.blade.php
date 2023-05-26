@@ -1,20 +1,20 @@
 @extends('layout')
 
-@section('title', 'Página principal')
+@section('title',  __('homepage.page'))
 
 @section('content')
 
     <div class="content">
         <div id="portada">
-            <h1><span class="marked">Controla tu dinero</span> de manera fácil, rápida y gratuita</h1>
+            <h1>@lang('homepage.control')</h1>
 
             @if (session('token'))
             <a href="{{ route('finance.index') }}">
-                Ir a tu panel
+                @lang('homepage.dashboard')
             </a>
             @else
             <a href="{{ route('registerForm') }}">
-                Comenzar ahora
+                @lang('homepage.start')
             </a>
             @endif
             <br>
@@ -24,46 +24,46 @@
             <div id="seccion-principal">
                 <div id="lugar">
                     <img src="img/mismositio_placeholder.png" alt="">
-                    <h2>El mismo lugar</h2>
-                    <p>Todos tus gastos, ingresos y gestiones en el mismo sitio.</p>
+                    <h2>@lang('homepage.samePlace')</h2>
+                    <p>@lang('homepage.allExpenses')</p>
                 </div>
                 <div id="recurrente">
                     <img src="img/recurrente_placeholder.png" alt="">
-                    <h2>No olvides lo recurrente</h2>
-                    <p>Pon tus finanzas una vez y recuérdalas siempre.</p>
+                    <h2>@lang('homepage.dontForget')</h2>
+                    <p>@lang('homepage.setFinances')</p>
                 </div>
                 <div id="movimientos">
                     <img src="img/historial_placeholder.png" alt="">
-                    <h2>Revisa tus movimientos</h2>
-                    <p>Revisa siempre que quieras todos tus movimientos para no olvidar nada.</p>
+                    <h2>@lang('homepage.checkMovements')</h2>
+                    <p>@lang('homepage.alwaysCheck')</p>
                 </div>
                 <div id="familia">
                     <img src="img/familia_placeholder.png" alt="">
-                    <h2>La familia y uno más</h2>
-                    <p>Gestiona una unidad familiar, ahorrar no es solo de uno.</p>
+                    <h2>@lang('homepage.family')</h2>
+                    <p>@lang('homepage.manageHousehold')</p>
                 </div>
             </div>
             <div id="seccion-controla">
                 <img src="img/greenarrow2_placeholder.png" alt="">
                 <div>
-                    <h2>Controla</h2>
-                    <p>Controla todo el dinero que entra y sale de tus bolsillos.</p>
+                    <h2>@lang('homepage.controlMoney')</h2>
+                    <p>@lang('homepage.controlMoney2')</p>
                 </div>
             </div>
             <div id="seccion-facil">
                 <div>
                     <img src="img/heart2_placeholder.png" alt="">
                     <div>
-                        <h2>Fácil</h2>
-                        <p>Acceso rápido e intuitivo, fácil de usar y entender para todos.</p>
+                        <h2>@lang('homepage.easy')</h2>
+                        <p>@lang('homepage.easy2')</p>
                     </div>
                 </div>
             </div>
             <div id="seccion-accesible">
                 <img src="img/world4_placeholder.png" alt="">
                 <div>
-                    <h2>Accesible</h2>
-                    <p>Accesible desde todas las partes del mundo cuando más lo necesites.</p>
+                    <h2>@lang('homepage.accessible')</h2>
+                    <p>@lang('homepage.accessible2')</p>
                 </div>
             </div>
         </div>

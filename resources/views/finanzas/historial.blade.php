@@ -1,22 +1,22 @@
 @extends('layout')
 
-@section('title', 'Historial')
+@section('title', __('finances.history'))
 
 @section('content')
 
     <div id="titulo">
-        <h1>Historial</h1>
+        <h1>@lang('finances.history')</h1>
     </div>
     <div class="main-content">
-        <input placeholder="Buscar" class="buscar" type="text" id="buscar">
+        <input placeholder="@lang('finances.search')" class="buscar" type="text" id="buscar">
         <div id="tabla-finanzas">
             <table>
                 <thead>
                     <tr>
-                        <th>Concepto</th>
-                        <th>Periodo</th>
-                        <th>Tipo</th>
-                        <th>Cantidad</th>
+                        <th>@lang('finances.concept')</th>
+                        <th>@lang('finances.period')</th>
+                        <th>@lang('finances.type')</th>
+                        <th>@lang('finances.amount')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +24,7 @@
                         <tr>
                             <td>{{ $finanza['name'] }}</td>
                             <td>{{ $finanza['period'] }}</td>
-                            <td>{{ $finanza['is_income'] ? 'Ingreso' : 'Gasto' }}</td>
+                            <td>{{ $finanza['is_income'] ? __('finances.singleIncome') : __('finances.singleExpense') }}</td>
                             <td class="{{ $finanza['is_income'] ? 'green' : 'red' }}">{{ $finanza['amount'] }}</td>
                         </tr>
                     @endforeach

@@ -248,6 +248,11 @@
         margin-top: 5rem;
     }
 
+    #seccion-controla div h2, #seccion-controla div p , #seccion-accesible div h2, #seccion-accesible div p {
+        margin-left: -1rem !important;
+        text-align: center;
+    }
+
     #seccion-accesible img {
         margin: auto;
         margin-bottom: 2rem;
@@ -282,8 +287,8 @@
     }
 
     #portada img {
-        width: 500px;
-        height: 500px;
+        width: 100vw;
+        height: 80vw;
         margin: auto;
     }
 }

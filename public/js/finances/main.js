@@ -4,6 +4,7 @@ let modal = null;
 let table = null;
 let form = null;
 var elementoSeleccionado = null;
+let json = null;
 
 /**
  * Función que crea un elemento checkbox
@@ -154,7 +155,13 @@ function addRowToTable(data) {
             });
 
             var options = ['alimentacion', 'vivienda', 'transporte', 'ocio', 'comunicaciones', 'salud', 'educacion', 'otros'];
-            var optionsNames = ['Alimentación', 'Vivienda', 'Transporte', 'Ocio', 'Comunicaciones', 'Salud', 'Educación', 'Otros'];
+            if(json.Idioma == 'es'){
+                var optionsNames = ['Alimentación', 'Vivienda', 'Transporte', 'Ocio', 'Comunicaciones', 'Salud', 'Educación', 'Otros'];
+            }else if(json.Idioma == 'en'){
+                var optionsNames = ['Food', 'Housing', 'Transport', 'Leisure', 'Communications', 'Health', 'Education', 'Others'];
+            } else if(json.Idioma == 'de'){
+                var optionsNames = ['Lebensmittel', 'Wohnung', 'Transport', 'Freizeit', 'Kommunikation', 'Gesundheit', 'Bildung', 'Andere'];
+            }
             for (var j = 0; j < options.length; j++) {
                 var option = document.createElement('option');
                 option.value = options[j];
@@ -353,6 +360,36 @@ window.addEventListener('load', function () {
     const modalOpenBtn = document.getElementById('añadir');
     const enviar = document.getElementsByClassName('añadir')[0];
 
+    let titulo = document.getElementById('titulo').getElementsByTagName('h1')[0].innerHTML;
+    if (titulo == "Ingresos" || titulo == "Gastos" || titulo == "Compras Grandes") {
+        json = {
+            "Idioma": "es",
+            "Total": "Total: ",
+            "DineroMes": "€/mes",
+            "Ingresos": "No hay ingresos",
+            "Gastos": "No hay gastos",
+            "Borrar": "Borrar",
+        };
+    }else if (titulo == "Income" || titulo == "Expenses" || titulo == "Purchases") {
+        json = {
+            "Idioma": "en",
+            "Total": "Total:",
+            "DineroMes": "€/month",
+            "Ingresos": "No income",
+            "Gastos": "No expenses",
+            "Borrar": "Delete",
+        };
+    } else if (titulo == "Einkommen" || titulo == "Ausgaben" || titulo == "Einkäufe") {
+        json = {
+            "Idioma": "de",
+            "Total": "Gesamt:",
+            "DineroMes": "€/Monat",
+            "Ingresos": "Kein Einkommen",
+            "Gastos": "Keine Ausgaben",
+            "Borrar": "Löschen",
+        };
+    }
+
     // Añadir evento a los inputs
     addEventToElements('input', 'click', function (e) {
         try {
@@ -385,7 +422,7 @@ window.addEventListener('load', function () {
     }
 
     // Se encarga de obtener los datos del formulario y enviarlos
-    if (enviar && enviar.textContent == 'Añadir') {
+    if (enviar && enviar.textContent == 'Añadir' || enviar.textContent == 'Add' || enviar.textContent == 'Hinzufügen') {
         enviar.addEventListener('click', async function (e) {
             e.preventDefault();
             const data = new URLSearchParams(new FormData(form));
@@ -395,14 +432,12 @@ window.addEventListener('load', function () {
                 data.set('image', form.image.files[0]);
             }
 
-
             //Si data tiene period, es una compra grande
             if (!data.has('period')) {
                 await fetchFinance(data, 'POST', '/api/finances')
                     .then(function (data) {
                         addRowToTable(data);
                         updateUI();
-
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -456,14 +491,14 @@ window.addEventListener('load', function () {
                                 const p3 = document.createElement('p');
                                 const span3 = document.createElement('span');
                                 span3.classList.add('titulo');
-                                span3.innerHTML = 'Total: ';
+                                span3.innerHTML = json.Total + ' ';
                                 const span4 = document.createElement('span');
                                 //Data amount pero en formato decimal 2
                                 let amount = Math.round(parseFloat(data.amount) * 100) / 100;
                                 span4.innerHTML = `0.00 / ${amount.toFixed(2)}€`;
                                 const span5 = document.createElement('span');
                                 span5.classList.add('titulo');
-                                span5.innerHTML = '<br>€/mes: ';
+                                span5.innerHTML = '<br>'+json.DineroMes+': ';
                                 const span6 = document.createElement('span');
                                 //Obtiene la diferencia de mes entre la fecha de hoy a dia 1 y la fecha de la compra
                                 const date = new Date();
@@ -477,16 +512,12 @@ window.addEventListener('load', function () {
 
                                 const button1 = document.createElement('button');
                                 button1.classList.add('borrar');
-                                button1.innerHTML = 'Borrar';
+                                button1.innerHTML = json.Borrar;
                                 button1.addEventListener('click', function (e) {
                                     e.preventDefault();
                                     div.remove();
                                     fetchFinance(null, 'DELETE', '/api/purchases/' + data.id);
                                 });
-
-                                /*                                 const button2 = document.createElement('button');
-                                                                button2.classList.add('modificar');
-                                                                button2.innerHTML = 'Modificar'; */
 
                                 div2.append(button1);
                                 div.append(img, p1, p2, br, p3, div2);
@@ -539,7 +570,7 @@ window.addEventListener('load', function () {
                     if (document.querySelectorAll('#tabla-ingresos tbody tr').length == 0) {
                         var tr = document.createElement('tr');
                         var td = document.createElement('td');
-                        td.innerHTML = 'No hay ingresos';
+                        td.innerHTML = json.Ingresos;
                         td.style.fontWeight = 'bold';
                         td.colSpan = '5';
                         tr.appendChild(td);
@@ -550,7 +581,7 @@ window.addEventListener('load', function () {
                     if (document.querySelectorAll('#tabla-gastos tbody tr').length == 0) {
                         var tr = document.createElement('tr');
                         var td = document.createElement('td');
-                        td.innerHTML = 'No hay gastos';
+                        td.innerHTML = json.Gastos;
                         td.style.fontWeight = 'bold';
                         td.colSpan = '6';
                         tr.appendChild(td);
@@ -558,25 +589,6 @@ window.addEventListener('load', function () {
                     }
                 }
             });
-
-            //Si la tabla tiene de id tabla-gastos entonces se modifica dineroTotal y dineroDisponible
-            /*             if (document.querySelector('#tabla-gastos')) {
-                            var total = document.querySelector('#dineroTotal');
-                            var disponible = document.querySelector('#dineroDisponible');
-                            total.innerHTML = `${parseFloat(total.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}`;
-                            disponible.innerHTML = `${parseFloat(disponible.innerHTML) + parseFloat(elementoSeleccionado.children[2].innerHTML)}€`;
-                            //Si es positivo activa el botón de id #añadirAhorro
-                            if (parseFloat(disponible.innerHTML) > 0) {
-                                document.querySelector('#añadirAhorro').disabled = false;
-                                document.querySelector('#añadirAhorro').classList.remove('disabled');
-                            }
-                            //Si por el contrario es negativo, desactiva el botón de id #añadirAhorro
-                            else {
-                                document.querySelector('#añadirAhorro').disabled = true;
-                                document.querySelector('#añadirAhorro').classList.add('disabled');
-                            }
-                        } */
-
         });
     }
 });
